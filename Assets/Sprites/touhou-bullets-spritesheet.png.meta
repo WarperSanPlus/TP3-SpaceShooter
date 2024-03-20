@@ -580,7 +580,7 @@ TextureImporter:
         width: 8
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -588,6 +588,27 @@ TextureImporter:
       bones: []
       spriteID: b3e1970b91bcd7e4bb53ae9d72bbc514
       internalID: 1183408950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: heart_blue
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 523
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56782ae8e2cfbaf48b547d0b6a8f5568
+      internalID: 1424042777
       vertices: []
       indices: 
       edges: []
@@ -608,6 +629,7 @@ TextureImporter:
       explode-green: 2043206244
       explode-orange: -517343290
       explode-yellow: 1957835910
+      heart_blue: 1424042777
       heart_yellow: 769677318
       knife-gray: 455777384
       pellet-green: 1183408950

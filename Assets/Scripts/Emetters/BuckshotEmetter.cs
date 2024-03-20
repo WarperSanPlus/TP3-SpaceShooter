@@ -55,9 +55,6 @@ namespace Emetters
 
         private void OnDrawGizmosSelected()
         {
-            if (this.isRandomAngle)
-                return;
-
             for (var i = 0; i < this.amount; i++)
             {
                 var angle = this.GetAngle(i);

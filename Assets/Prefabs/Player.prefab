@@ -741,6 +741,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8374096152468858353}
   - component: {fileID: 1951613455580890452}
+  - component: {fileID: 7177885202102998076}
+  - component: {fileID: 9006609649509731219}
   m_Layer: 8
   m_Name: Reimu
   m_TagString: Untagged
@@ -804,7 +806,7 @@ SpriteRenderer:
   m_SortingLayerID: 422294779
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2078797818, guid: 51918cf86827e95458fbe86fe9a97652, type: 3}
+  m_Sprite: {fileID: -1831005430, guid: 4541d444417a6e34592892727d188c3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -815,6 +817,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7177885202102998076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342782030213532497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 9ff910c68f9643d4a8e73eefd43679bb, type: 3}
+--- !u!114 &9006609649509731219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342782030213532497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 4.41058e-23
+  m_labelHash: 0.0007967211
+  m_SpriteKey: 0
+  m_SpriteHash: 427258181
 --- !u!1 &7596176322950647327
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,7 +892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 114916928245478590, guid: 71e4df0fb58080c468b100a64317a58a, type: 3}
-  cooldown: 0
+  cooldown: 0.2
   startActions: []
   endActions: []
   useOriginRotation: 0

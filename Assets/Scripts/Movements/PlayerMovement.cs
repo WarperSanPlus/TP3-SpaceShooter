@@ -44,6 +44,9 @@ namespace Movements
 
         private void UpdateAnimator()
         {
+            if (this.playerAnimator == null)
+                return;
+
             this.playerAnimator.SetBool("isGoingRight", this.direction.x > 0);
             this.playerAnimator.SetBool("isGoingLeft", this.direction.x < 0);
         }
