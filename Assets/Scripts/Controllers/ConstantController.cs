@@ -1,5 +1,6 @@
 ﻿using Emetters;
 using Serializables;
+using Singletons;
 using UnityEngine;
 
 namespace Controllers
@@ -48,7 +49,7 @@ namespace Controllers
             };
         }
 
-        #endregion BaseController
+#endregion BaseController
 
         #region States
 

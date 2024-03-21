@@ -165,7 +165,7 @@ namespace Emetters
         /// <returns><see cref="GameObject"/> that will be used for the current projectile at <paramref name="index"/></returns>
         protected virtual GameObject GetProjectile(int index) => this.bulletPrefab == null
             ? null
-            : ObjectPool.Instance.GetPooledObject(this.bulletPrefab.name, BaseBullet.NAMESPACE);
+            : ObjectPool.GetPooledObject(this.bulletPrefab.name, BaseBullet.NAMESPACE);
 
         /// <returns>Starting position of the projectile at <paramref name="index"/></returns>
         protected virtual Vector3 GetOrigin(int index) => Vector3.zero;

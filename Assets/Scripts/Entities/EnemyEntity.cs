@@ -10,6 +10,8 @@ namespace Entities
     /// </summary>
     public class EnemyEntity : BaseEntity, ILifespan
     {
+        public const string NAMESPACE = "Enemies";
+
         [Header("Enemy Entity")]
         [SerializeField, Tooltip("Determines if, on death, its' bullets will be destroyed")]
         private bool destroyBulletsOnDeath = false;
@@ -19,7 +21,7 @@ namespace Entities
             if (fromPlayer)
             {
                 // Explode
-                GameObject obj = ObjectPool.Instance.GetRandomObject("Explosions");
+                GameObject obj = ObjectPool.GetRandomObject("Explosions");
                 obj.transform.position = this.transform.position;
                 obj.SetActive(true);
 
@@ -29,7 +31,7 @@ namespace Entities
                         item.DestroyBullets();
                 }
 
-                GameObject powerUp = ObjectPool.Instance.GetRandomObject(PowerUps.BasePowerUp.NAMESPACE);
+                GameObject powerUp = ObjectPool.GetRandomObject(PowerUps.BasePowerUp.NAMESPACE);
                 powerUp.transform.position = this.transform.position;
                 powerUp.SetActive(true);
 
@@ -72,7 +74,7 @@ namespace Entities
             if (sound == null)
                 return;
 
-            ObjectPool.Instance.GetPooledObject(sound.name, SFX_Object.NAMESPACE);
+            ObjectPool.GetPooledObject(sound.name, SFX_Object.NAMESPACE);
         }
 
         #endregion SFX

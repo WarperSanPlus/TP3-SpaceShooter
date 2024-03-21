@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using Serializables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Singletons
         #endregion
 
         #region Evaluation
+
+#if UNITY_EDITOR
 
         [SerializeField]
         [Tooltip("Keeps tracks of the number of projectiles spawned. Usefull to determine the amount needed")]
@@ -58,10 +61,11 @@ namespace Singletons
             // Reput
             this.pooledTypes[typeIndex].Settings[settingIndex].amountSpawned++;
         }
+#endif
 
         #endregion Evaluation
 
-        #region Pooled Object
+        #region Getters
 
         /// <param name="prefabName">
         /// Name of the <see cref="GameObject"/> to get
@@ -69,24 +73,26 @@ namespace Singletons
         /// <returns>
         /// First instance of the <see cref="GameObject"/> that has the given name
         /// </returns>
-        public GameObject GetPooledObject(string prefabName, string @namespace)
+        public static GameObject GetPooledObject(string prefabName, string @namespace)
         {
             var key = GetKey(prefabName, @namespace);
 
-            if (!this.pooledInfos.TryGetValue(key, out (Transform parent, GameObject prefab) infos))
+            if (!Instance.pooledInfos.TryGetValue(key, out (Transform parent, GameObject prefab) infos))
             {
                 Debug.LogError($"The prefab \'{prefabName}\' was not pooled.");
                 return null;
             }
 
-            GameObject child = this.FindChildren(infos.parent);
+            GameObject child = Instance.FindChildren(infos.parent);
 
             if (child == null)
             {
-                if (!this.isEvaluating)
+#if UNITY_EDITOR
+                if (!Instance.isEvaluating)
+#endif
                     Debug.LogWarning($"Consider increasing the initial amount of \'{prefabName}\'.");
 
-                child = this.CreateObject(infos.parent, infos.prefab);
+                child = Instance.CreateObject(infos.parent, infos.prefab);
             }
 
             foreach (IResetable item in child.GetComponents<IResetable>())
@@ -95,17 +101,21 @@ namespace Singletons
             return child;
         }
 
-        public GameObject GetRandomObject(string @namespace)
+        public static GameObject GetRandomObject(string @namespace)
         {
             // Find namespace child
-            Transform namespaceParent = this.transform.Find(@namespace);
+            Transform namespaceParent = Instance.transform.Find(@namespace);
 
             // Get random child
             var prefabName = namespaceParent.GetChild(UnityEngine.Random.Range(0, namespaceParent.childCount)).name;
 
             // Get instance
-            return this.GetPooledObject(prefabName, @namespace);
+            return GetPooledObject(prefabName, @namespace);
         }
+
+        #endregion
+
+        #region Pooled Object
 
         private GameObject FindChildren(Transform parent)
         {
@@ -129,8 +139,10 @@ namespace Singletons
         /// <returns><see cref="GameObject"/> created</returns>
         private GameObject CreateObject(Transform parent, GameObject prefab)
         {
+#if UNITY_EDITOR
             if (this.isEvaluating)
                 this.IncreaseEvaluate(prefab.name, parent.parent.name);
+#endif
 
             // Create object
             return GameObject.Instantiate(prefab, parent);
@@ -180,33 +192,77 @@ namespace Singletons
         private void InitializePooledTypes()
         {
             foreach (PoolingType item in this.pooledTypes)
+                this.CreateType(item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="amountInAddition">
+        /// Determines if the setting should add <see cref="PoolingSetting.amount"/> 
+        /// or if it should have at least <see cref="PoolingSetting.amount"/>
+        /// </param>
+        public static void PreparePoolSetting(PoolingSetting setting, string @namespace, bool amountInAddition = true)
+        {
+            // Get parent
+            Transform parent = Instance.transform.Find(@namespace);
+
+            // If namespace not found, create
+            if (parent == null)
             {
-                // Create the namespace parent
-                var newParent = new GameObject()
+                Instance.CreateType(new PoolingType()
                 {
-                    name = item.Namespace,
-                };
-                newParent.transform.parent = this.transform;
+                    Namespace = @namespace,
+                    Settings = new PoolingSetting[] { setting }
+                });
+                return;
+            }
 
-                foreach (PoolingSetting setting in item.Settings)
-                {
-                    // Create the prefab parent
-                    var newSetting = new GameObject()
-                    {
-                        name = setting.Prefab.name,
-                    };
+            // If there are enough items, skip
+            if (!amountInAddition && parent.childCount >= setting.amount)
+                return;
 
-                    newSetting.transform.parent = newParent.transform;
+            // Get the amount to spawn
+            setting.amount = amountInAddition ? setting.amount : parent.childCount - setting.amount;
 
-                    this.pooledInfos.Add(GetKey(setting.Prefab.name, item.Namespace), (newSetting.transform, setting.Prefab));
+            // Create the setting
+            Instance.CreateSetting(setting, parent, @namespace);
+        }
 
-                    // Create every prefab
-                    for (var i = 0; i < setting.amount; i++)
-                    {
-                        GameObject newPrefab = this.CreateObject(newSetting.transform, setting.Prefab);
-                        newPrefab.SetActive(false);
-                    }
-                }
+        private void CreateType(PoolingType type)
+        {
+            // Create the namespace parent
+            var newParent = new GameObject()
+            {
+                name = type.Namespace,
+            };
+            newParent.transform.parent = this.transform;
+
+            foreach (PoolingSetting setting in type.Settings)
+                this.CreateSetting(setting, newParent.transform, newParent.name);
+        }
+
+        private void CreateSetting(PoolingSetting setting, Transform parent, string @namespace)
+        {
+            // Create the prefab parent
+            var newSetting = new GameObject()
+            {
+                name = setting.Prefab.name,
+            };
+
+            newSetting.transform.parent = parent;
+
+            this.pooledInfos.Add(
+                GetKey(setting.Prefab.name, @namespace),
+                (newSetting.transform, setting.Prefab)
+                );
+
+            // Create every prefab
+            for (var i = 0; i < setting.amount; i++)
+            {
+                GameObject newPrefab = this.CreateObject(newSetting.transform, setting.Prefab);
+                newPrefab.SetActive(false);
             }
         }
 
@@ -215,35 +271,6 @@ namespace Singletons
 
         // "Namespace/PrefabName" => (Parent, Prefab)
         private readonly Dictionary<string, (Transform parent, GameObject prefab)> pooledInfos = new();
-
-        /// <summary>
-        /// Defines the category under which the settings are
-        /// </summary>
-        [Serializable]
-        public struct PoolingType
-        {
-            [Tooltip("Under which category those objects are")]
-            public string Namespace;
-
-            [Tooltip("List of settings associated with this type")]
-            public PoolingSetting[] Settings;
-        }
-
-        /// <summary>
-        /// Defines how this object pool should initializes
-        /// </summary>
-        [Serializable]
-        public struct PoolingSetting
-        {
-            [Tooltip("GameObject to spawn")]
-            public GameObject Prefab;
-
-            [Min(0), Tooltip("Amount of objects to create at the start of this script")]
-            public int amount;
-
-            [Tooltip("Shows how many objects of this type has been spawned")]
-            public int amountSpawned;
-        }
 
         #endregion Pooling Type
     }
