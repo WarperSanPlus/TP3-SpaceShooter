@@ -32,6 +32,56 @@ Transform:
   - {fileID: 2646010313140736042}
   m_Father: {fileID: 9054949487482545741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3887600353952150210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6518126712165301268}
+  - component: {fileID: 1952973109272144500}
+  m_Layer: 7
+  m_Name: Predicate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6518126712165301268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887600353952150210}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9054949487482545741}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1952973109272144500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887600353952150210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514a89c7d6671c44b99e83127b316904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 1
+  ASCA: 0
+  height: 5
+  end: {x: 0, y: 0, z: 0}
+  entity: {fileID: 6631861797895800607}
+  animator: {fileID: 7376791716745055397}
 --- !u!1 &4499600292918226813
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +273,6 @@ GameObject:
   - component: {fileID: 1942317413763597185}
   - component: {fileID: 7376791716745055397}
   - component: {fileID: 6631861797895800607}
-  - component: {fileID: 352619735050202489}
   - component: {fileID: 1176237840418842780}
   - component: {fileID: 8975560063448634741}
   m_Layer: 7
@@ -250,6 +299,7 @@ Transform:
   - {fileID: 3875445190982674968}
   - {fileID: 2098525712996453333}
   - {fileID: 354546851259161296}
+  - {fileID: 6518126712165301268}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1942317413763597185
@@ -321,22 +371,6 @@ MonoBehaviour:
   destroyBulletsOnDeath: 0
   hitSound: {fileID: 9026732603171759400, guid: 81aad39d4dd14ac40a04263104dbfd3f, type: 3}
   deathSound: {fileID: 2326649506153876685, guid: c144fdb85b12d144d9ec15613a864fbe, type: 3}
---- !u!114 &352619735050202489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6896461211182837300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 514a89c7d6671c44b99e83127b316904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 0
-  delay: 0
-  height: 5
-  end: {x: 0, y: 0, z: 0}
 --- !u!114 &1176237840418842780
 MonoBehaviour:
   m_ObjectHideFlags: 0

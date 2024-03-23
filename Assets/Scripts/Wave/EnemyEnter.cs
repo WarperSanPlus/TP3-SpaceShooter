@@ -1,10 +1,9 @@
 using Entities;
 using Interfaces;
+using Predicates;
 using UnityEngine;
 
-[RequireComponent(typeof(BaseEntity))]
-[RequireComponent(typeof(Animator))]
-public class EnemyEnter : MonoBehaviour, IResetable
+public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
 {
     private const float TO_IDLE_PERCENT = 0.75f;
     private const string TO_IDLE_FLAG = "isIdling";
@@ -12,8 +11,7 @@ public class EnemyEnter : MonoBehaviour, IResetable
     [SerializeField, Tooltip("Amounf of seconds needed to travel to the end position")]
     private float duration = 1f;
 
-    [SerializeField, Min(0)]
-    private float delay = 0f;
+    public bool ASCA = false;
 
     [SerializeField, Tooltip("Determines the height of the movement")]
     private float height = 5f;
@@ -29,34 +27,38 @@ public class EnemyEnter : MonoBehaviour, IResetable
     /// <inheritdoc/>
     private void FixedUpdate()
     {
-        this.delay -= Time.fixedDeltaTime;
-
-        if (this.delay > 0f)
+        if (!this.ASCA)
             return;
 
         if (this.duration > 0)
         {
             if (this.entity != null)
             {
-                this.entity.isInvicible = false;
-                this.entity = null;
+                if (this.entity.isInvicible)
+                    this.entity.isInvicible = false;
+
+                this.entity.transform.position = Parabola(this.start, this.end, this.height, this.time / this.duration);
             }
-
-            this.transform.position = Parabola(this.start, this.end, this.height, this.time / this.duration);
-
-            this.CheckAnimation();
 
             this.time += Time.fixedDeltaTime;
         }
-
+        
         if (this.time >= this.duration)
         {
             this.enabled = false;
-            this.transform.position = this.end;
+
+            if (this.entity != null)
+                this.entity.transform.position = this.end;
         }
+
+        this.CheckAnimation();
     }
 
-    private void OnDisable() => this.SetAllActivatables(true);
+    private void OnDisable()
+    {
+        this.SetAllActivatables(true);
+        print("DISABLED");
+    }
 
     #endregion
 
@@ -79,40 +81,51 @@ public class EnemyEnter : MonoBehaviour, IResetable
 
     public void OnReset()
     {
-        this.entity = this.entity != null ? this.entity : this.gameObject.GetComponent<BaseEntity>();
+        this.start = this.entity == null ? this.transform.position : this.entity.transform.position;
 
-        this.start = this.transform.position;
-
-        this.onArrived ??= this.gameObject.GetComponents<IActivatable>();
+        this.onArrived ??= this.transform.parent.GetComponents<IActivatable>();
         this.SetAllActivatables(false);
         this.enabled = true;
         this.time = 0;
 
         // Animator
-        this.animator = this.animator != null ? this.animator : this.gameObject.GetComponent<Animator>();
-        this.animator.SetBool(TO_IDLE_FLAG, false);
+        if (this.animator != null)
+            this.animator.SetBool(TO_IDLE_FLAG, false);
         this.toIdleFlag = false;
+
+        // Delay
+        if (this.TryGetComponent(out PredicateScript predicate))
+            predicate.Add(this);
+
+        this.ASCA = predicate == null;
+    }
+
+    public void Trigger()
+    {
+        this.ASCA = true;
     }
 
     #endregion
 
     #region BaseEntity
 
-    private BaseEntity entity = null;
+    [SerializeField, Extensions.IgnoreCopy]
+    private BaseEntity entity;
 
     #endregion
 
     #region Animator
 
+    [SerializeField, Extensions.IgnoreCopy]
     private Animator animator;
     private bool toIdleFlag = false;
 
     private void CheckAnimation()
     {
-        if (this.toIdleFlag)
+        if (this.toIdleFlag || this.animator == null)
             return;
 
-        if (this.time / this.duration < TO_IDLE_PERCENT)
+        if (this.duration == 0 || this.time / this.duration < TO_IDLE_PERCENT)
             return;
 
         this.animator.SetBool(TO_IDLE_FLAG, true);
