@@ -1,16 +1,21 @@
-﻿using System;
+﻿using UnityEngine;
 
 namespace Predicates
 {
-    public class WaitForSeconds : PredicateScript
+    /// <summary>
+    /// Waits for the given amount of time
+    /// </summary>
+    public class WaitForSeconds : Predicate
     {
-        public float time = 0;
+        [SerializeField, Min(0), Tooltip("Amount of time in seconds before the condition becomes true")]
+        private float time = 0;
 
-        public override Func<float, bool> GetCondition() => new(elapsed =>
+        /// <inheritdoc/>
+        public override bool GetCondition(float elapsed)
         {
             this.time -= elapsed;
 
             return this.time <= 0;
-        });
+        }
     }
 }

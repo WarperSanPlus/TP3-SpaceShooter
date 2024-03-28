@@ -7,9 +7,18 @@ public class ScrollTexture : MonoBehaviour
     private float scrollSpeed = 0.1f; // Vitesse de défilement de la texture
 
     [SerializeField] private Vector2 direction;
-    private Renderer rend;
+    private Material material;
 
-    private void Start() => this.rend = this.GetComponent<Renderer>();
+    private void Start()
+    {
+        if (!this.TryGetComponent(out Renderer rend))
+        {
+            this.enabled = false;
+            return;
+        }
+
+        this.material = rend.material;
+    }
 
     private void FixedUpdate() => this.AdvanceTexture();
 
@@ -18,6 +27,6 @@ public class ScrollTexture : MonoBehaviour
         // Appliquer le déplacement de texture à l'objet
         Vector2 déplacement = this.scrollSpeed * Time.time * this.direction.normalized;
 
-        this.rend.material.SetTextureOffset("_MainTex", déplacement);
+        this.material.SetTextureOffset("_MainTex", déplacement);
     }
 }

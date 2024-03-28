@@ -1,25 +1,18 @@
-﻿using Interfaces;
+﻿using Extensions;
+using Interfaces;
 using System;
 
 namespace Predicates
 {
-    [Serializable]
-    public class Predicate
+    public abstract class Predicate : UnityEngine.MonoBehaviour
     {
-        private readonly IPredicatable source;
-        private readonly Func<float, bool> condition;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="elapsed"></param>
+        /// <returns></returns>
+        public abstract bool GetCondition(float elapsed);
 
-        public Predicate(IPredicatable source) : this(source, null) { }
-
-        public Predicate(IPredicatable source, Func<float, bool> condition)
-        {
-            this.source = source;
-            this.condition = condition;
-        }
-
-        public void Trigger() => this.source?.Trigger();
-        public bool IsComplete(float elapsed) => this.condition?.Invoke(elapsed) ?? true;
-        public bool Exists() => this.source != null;
-        public bool IsSource(IPredicatable source) => this.source == source;
+        public void Add(IPredicatable source) => source.Add(this.GetCondition);
     }
 }

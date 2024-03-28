@@ -1,3 +1,4 @@
+using Entities;
 using Extensions;
 using Interfaces;
 using Serializables;
@@ -30,7 +31,7 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
         List<GameObject> enemies = LoadWave(this.waves[Random.Range(0, this.waves.Length)]);
 
         // Wait until all the enemies are dead or timer to run out
-        this.Add((_) => !enemies.Any(o => o.activeInHierarchy));
+        this.Add(_ => !enemies.Any(o => o.activeInHierarchy));
         //this.Add((float elapsed) =>
         //{
         //    this.timer -= elapsed;
@@ -75,12 +76,12 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
             enter.Copy(childEnter);
 
             // Remove all Predicates
-            foreach (Predicates.PredicateScript item in enter.GetComponents<Predicates.PredicateScript>())
+            foreach (Predicates.Predicate item in enter.GetComponents<Predicates.Predicate>())
                 Destroy(item);
 
             // Copy predicate
-            if (childEnter.TryGetComponent(out Predicates.PredicateScript predicate))
-                predicate.CopyComponent(enter.gameObject);
+            if (childEnter.TryGetComponent(out Predicates.Predicate predicate))
+                _ = predicate.CopyComponent(enter.gameObject);
 
             // Reset
             enter.OnReset();
@@ -91,7 +92,48 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
             enemies.Add(enemy);
         }
 
+        SetUpLinks(enemies, prefab.GetComponent<WaveDataMaker>());
+
         return enemies;
+    }
+    private static void SetUpLinks(List<GameObject> enemies, WaveDataMaker wave)
+    {
+        var references = new List<(BaseEntity entity, IPredicateEntity listener)>();
+
+        foreach (GameObject item in enemies)
+        {
+            BaseEntity entity = item.GetComponent<BaseEntity>();
+            EnemyEnter enter = item.GetComponentInChildren<EnemyEnter>();
+            IPredicateEntity predicate = enter == null ? null : enter.GetComponent<IPredicateEntity>();
+
+            references.Add((entity, predicate));
+        }
+
+        // Get links
+        WaveLink[] links = wave.data.links;
+        var entitiesForListeners = new Dictionary<IPredicateEntity, List<BaseEntity>>();
+
+        foreach (WaveLink item in links)
+        {
+            // Get own
+            IPredicateEntity listener = references[item.From].listener;
+
+            // Get to
+            BaseEntity target = references[item.To].entity;
+
+            // Set to
+            if (listener == null)
+                continue;
+
+            if (!entitiesForListeners.ContainsKey(listener))
+                entitiesForListeners[listener] = new();
+
+            entitiesForListeners[listener].Add(target);
+        }
+
+        // Notify each others
+        foreach (KeyValuePair<IPredicateEntity, List<BaseEntity>> item in entitiesForListeners)
+            item.Key.SetEntities(item.Value.ToArray());
     }
 
     /// <summary>

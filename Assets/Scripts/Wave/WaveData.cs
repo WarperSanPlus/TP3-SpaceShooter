@@ -9,4 +9,6 @@ public class WaveData : ScriptableObject
     public PoolingSetting[] enemySetting;
 
     public PoolingSetting[] bulletSetting;
+
+    public WaveLink[] links;
 }
