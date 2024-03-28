@@ -1,6 +1,7 @@
 ﻿using Controllers;
 using Interfaces;
 using Singletons;
+using TMPro;
 using UnityEngine;
 
 namespace Entities
@@ -22,6 +23,7 @@ namespace Entities
             {
                 // Explode
                 GameObject obj = ObjectPool.GetRandomObject("Explosions");
+                
                 obj.transform.position = this.transform.position;
                 obj.SetActive(true);
 
@@ -34,7 +36,7 @@ namespace Entities
                 GameObject powerUp = ObjectPool.GetRandomObject(PowerUps.BasePowerUp.NAMESPACE);
                 powerUp.transform.position = this.transform.position;
                 powerUp.SetActive(true);
-
+                PlayerUI.Instance.AddScore(1);
                 this.PlaySound(this.deathSound);
             }
 
