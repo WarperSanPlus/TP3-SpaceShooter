@@ -7,15 +7,22 @@ namespace Movements
     public class PlayerMovement : MonoBehaviour
     {
         private Rigidbody2D rb;
+
+        // Start is called before the first frame update
+        private void Start() => this.rb = this.gameObject.GetComponent<Rigidbody2D>();
+
+        private void FixedUpdate() => this.MoveTowardsTarget();
+
+
+        #region Move
+
         private Vector2 direction;
-        [Min(0)] public float speed;
+        [SerializeField, Min(0)] 
+        private float speed;
 
         [Header("Capping Position")]
         [SerializeField] private Vector2 minPosition;
         [SerializeField] private Vector2 maxPosition;
-
-        // Start is called before the first frame update
-        private void Start() => this.rb = this.gameObject.GetComponent<Rigidbody2D>();
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
@@ -23,11 +30,10 @@ namespace Movements
             this.UpdateAnimator();
         }
 
-        private void FixedUpdate() => this.MoveTowardsTarget();
-
         private void MoveTowardsTarget()
         {
-            Vector3 nextPosition = this.transform.position + (Vector3)(this.direction * this.speed);
+            var currentSpeed = this.isSneaking ? this.sneakSpeed : this.speed;
+            Vector3 nextPosition = this.transform.position + (Vector3)(this.direction * currentSpeed);
 
             // Cap next position
             nextPosition.x = Mathf.Clamp(nextPosition.x, this.minPosition.x, this.maxPosition.x);
@@ -35,6 +41,20 @@ namespace Movements
 
             this.rb.MovePosition(nextPosition);
         }
+
+        #endregion
+
+        #region Sneak
+        [SerializeField, Min(0)]
+        private float sneakSpeed;
+        private bool isSneaking = false;
+
+        public void OnSneak(InputAction.CallbackContext ctx)
+        {
+            this.isSneaking = ctx.ReadValueAsButton();
+        }
+
+        #endregion
 
         #region Animator
 

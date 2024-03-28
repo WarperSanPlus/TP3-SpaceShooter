@@ -113,6 +113,38 @@ namespace Singletons
             return GetPooledObject(prefabName, @namespace);
         }
 
+        public static int GetActiveObjectCount(string @namespace)
+        {
+            Transform namespaceParent = Instance.transform.Find(@namespace);
+
+            if (namespaceParent == null)
+                return 0;
+
+            var amount = 0;
+
+            // Get every prefab
+            foreach (Transform prefabParent in namespaceParent.transform)
+                amount += GetActiveObjectCount(@namespace, prefabParent.name);
+
+            return amount;
+        }
+
+        public static int GetActiveObjectCount(string @namespace, string prefabName)
+        {
+            var key = GetKey(prefabName, @namespace);
+
+            if (!Instance.pooledInfos.ContainsKey(key))
+                return 0;
+
+            var amount = 0;
+
+            // Get active children
+            foreach (Transform item in Instance.pooledInfos[key].parent)
+                amount++;
+
+            return amount;
+        }
+
         #endregion
 
         #region Pooled Object
@@ -145,7 +177,10 @@ namespace Singletons
 #endif
 
             // Create object
-            return GameObject.Instantiate(prefab, parent);
+            var newObj = GameObject.Instantiate(prefab, parent);
+            newObj.name = parent.name;
+
+            return newObj;
         }
 
         /// <returns>Key of the prefab in <see cref="pooledInfos"/></returns>

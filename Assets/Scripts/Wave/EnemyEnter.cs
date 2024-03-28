@@ -11,7 +11,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
     [SerializeField, Tooltip("Amounf of seconds needed to travel to the end position")]
     private float duration = 1f;
 
-    public bool ASCA = false;
+    private bool canStart = false;
 
     [SerializeField, Tooltip("Determines the height of the movement")]
     private float height = 5f;
@@ -27,7 +27,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
     /// <inheritdoc/>
     private void FixedUpdate()
     {
-        if (!this.ASCA)
+        if (!this.canStart)
             return;
 
         if (this.duration > 0)
@@ -42,7 +42,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
 
             this.time += Time.fixedDeltaTime;
         }
-        
+
         if (this.time >= this.duration)
         {
             this.enabled = false;
@@ -54,11 +54,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
         this.CheckAnimation();
     }
 
-    private void OnDisable()
-    {
-        this.SetAllActivatables(true);
-        print("DISABLED");
-    }
+    private void OnDisable() => this.SetAllActivatables(true);
 
     #endregion
 
@@ -94,16 +90,13 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
         this.toIdleFlag = false;
 
         // Delay
-        if (this.TryGetComponent(out PredicateScript predicate))
+        if (this.TryGetComponent(out Predicate predicate))
             predicate.Add(this);
 
-        this.ASCA = predicate == null;
+        this.canStart = predicate == null;
     }
 
-    public void Trigger()
-    {
-        this.ASCA = true;
-    }
+    public void Trigger() => this.canStart = true;
 
     #endregion
 
