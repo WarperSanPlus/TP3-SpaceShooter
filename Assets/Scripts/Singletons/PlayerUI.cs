@@ -18,6 +18,7 @@ namespace Singletons
         private void Start()
         {
             this.playerScore = this.GetComponentInChildren<TextMeshProUGUI>();
+            this.Score = 0;
             this.playerScore.SetText("Score: " + this.Score);
         }
 
@@ -25,6 +26,18 @@ namespace Singletons
         {
             this.Score += points;
             this.playerScore.SetText("Score: " + this.Score);
+
+
+            int highscore = PlayerPrefs.GetInt("Highscore", 0);
+            if (this.Score > highscore)
+            {
+                highscore = this.Score;
+                PlayerPrefs.SetInt("Highscore", highscore);
+                PlayerPrefs.Save();
+            }
+ 
+            PlayerPrefs.SetInt("CurrentScore", this.Score);
+            PlayerPrefs.Save();
         }
     }
 }

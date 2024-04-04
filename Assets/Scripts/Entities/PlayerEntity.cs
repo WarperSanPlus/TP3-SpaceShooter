@@ -2,6 +2,7 @@
 using Emetters;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Entities
 {
@@ -37,6 +38,10 @@ namespace Entities
 
             if (index != -1)
                 this.controller.SetEmetter(this.emetters[index].emetter);
+
+            // Si le joueur n'a plus de vie, on change de scene
+            if (newHealth <= 0)
+                SceneManager.LoadScene("HighScore");
         }
 
         /// <inheritdoc/>
