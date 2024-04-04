@@ -10,6 +10,7 @@ public class WaveDataMaker : MonoBehaviour
     public WaveData data;
 
 #if UNITY_EDITOR
+
     [SerializeField]
     private bool overrideCompiling = false;
 
@@ -51,6 +52,8 @@ public class WaveDataMaker : MonoBehaviour
         // Save data
         if (!hasData)
             AssetDatabase.CreateAsset(instance.data, $"Assets/Data/Waves/{instance.gameObject.name}.asset");
+
+        instance.overrideCompiling = true;
 
         // Save prefab
         EditorUtility.SetDirty(instance);
@@ -114,6 +117,7 @@ public class WaveDataMaker : MonoBehaviour
 
         return settings;
     }
+
     private static Dictionary<Transform, int> GetLinks(IEnumerable<Transform> children, out List<(int own, int to)> links)
     {
         // Attribute an ID to every children
@@ -139,7 +143,7 @@ public class WaveDataMaker : MonoBehaviour
             // Get the linked entities
             Entities.BaseEntity[] linkedEntities = predicateEntity.GetEntities();
 
-            // Create a list of links 
+            // Create a list of links
             foreach (Entities.BaseEntity entity in linkedEntities)
             {
                 // Get own id
@@ -155,5 +159,6 @@ public class WaveDataMaker : MonoBehaviour
 
         return ids;
     }
+
 #endif
 }

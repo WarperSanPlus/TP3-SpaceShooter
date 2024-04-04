@@ -4,6 +4,7 @@ public class LookAtTarget : MonoBehaviour
 {
     [SerializeField]
     private Transform target;
+
     private Quaternion initialRotation;
 
     [SerializeField]

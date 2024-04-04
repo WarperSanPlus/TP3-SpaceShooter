@@ -41,14 +41,14 @@ namespace Emetters
         #region BaseEmetter
 
         /// <inheritdoc/>
-        protected override Vector3 GetOrigin(int index) 
+        protected override Vector3 GetOrigin(int index)
             => this.GetPos(UnityEngine.Random.Range(-this.rightBound, this.leftBound));
 
         /// <inheritdoc/>
         protected override Quaternion GetRotation(int index) => this.transform.rotation;
 
         /// <inheritdoc/>
-        protected override int GetProjectileCount() 
+        protected override int GetProjectileCount()
             => UnityEngine.Random.Range(this.minProjectileCount, this.maxProjectileCount);
 
         /// <inheritdoc/>
@@ -61,7 +61,7 @@ namespace Emetters
             return proj;
         }
 
-        #endregion
+        #endregion BaseEmetter
 
         #region Gizmos
 
@@ -77,7 +77,7 @@ namespace Emetters
             // Max
             Gizmos.DrawRay(this.GetPos(1), this.transform.up * 10);
 
-            // Draw bounds 
+            // Draw bounds
             Gizmos.color = Color.red;
             Gizmos.DrawRay(this.GetPos(-this.rightBound), this.transform.up * 5);
 
@@ -85,6 +85,6 @@ namespace Emetters
             Gizmos.DrawRay(this.GetPos(this.leftBound), this.transform.up * 5);
         }
 
-        #endregion
+        #endregion Gizmos
     }
 }

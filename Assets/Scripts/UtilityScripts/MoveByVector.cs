@@ -12,10 +12,11 @@ namespace UtilityScripts
         public float speed;
 
         // Update is called once per frame
-        private void FixedUpdate() 
+        private void FixedUpdate()
             => this.transform.Translate(this.GetDirection(), Space.World);
 
-        private Vector3 GetDirection() => this.GetDirection(this.direction);
+        private Vector3 GetDirection() => this.GetDirection(this.direction);
+
         public Vector3 GetDirection(Vector3 dir) => this.speed * Time.fixedDeltaTime * dir.normalized;
 
         #region IEnterActivation
@@ -36,7 +37,6 @@ namespace UtilityScripts
             Gizmos.DrawLine(this.transform.position, this.transform.position + (this.GetDirection() * 10));
         }
 
-        #endregion
-
+        #endregion Gizmos
     }
 }

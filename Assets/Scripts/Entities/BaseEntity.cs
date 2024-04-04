@@ -43,7 +43,7 @@ namespace Entities
         /// <inheritdoc/>
         public void SetActive(bool isActive) => this.isInvicible = !isActive;
 
-        #endregion
+        #endregion IActivatable
 
         #region IResetable
 
@@ -56,13 +56,14 @@ namespace Entities
             this.hitBlinkCoroutine = null;
         }
 
-        #endregion
+        #endregion IResetable
 
         #region I-frames
 
         [SerializeField, Min(0)]
         [Tooltip("Number of seconds where the entity cannot be damaged after a hit")]
         private float invincibilityTime = 0;
+
         private int iframes = 0;
 
         #endregion I-frames
@@ -190,7 +191,8 @@ namespace Entities
         /// <param name="newHealth">New value of <see cref="health"/></param>
         /// <param name="oldHealth">Previous value of <see cref="health"/></param>
         /// <param name="maxHealth">Value of <see cref="MaxHealth"/></param>
-        protected virtual void OnHealthChanged(float newHealth, float oldHealth, float maxHealth) { }
+        protected virtual void OnHealthChanged(float newHealth, float oldHealth, float maxHealth)
+        { }
 
         /// <param name="amount">Current amount of damage</param>
         /// <returns>How much damage does the attack do?</returns>
@@ -200,7 +202,8 @@ namespace Entities
         /// Called when <see cref="FixedUpdate"/> is called
         /// </summary>
         /// <param name="elapsed">Time elapsed since the last call</param>
-        protected virtual void OnUpdate(float elapsed) { }
+        protected virtual void OnUpdate(float elapsed)
+        { }
 
         /// <returns>Should the collision be managed?</returns>
         protected virtual bool ShouldCollide(Collider2D collision) => true;

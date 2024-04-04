@@ -54,6 +54,7 @@ namespace Extensions
 
     public class IgnoreCopyAttribute : System.Attribute
     {
-        public IgnoreCopyAttribute() { }
+        public IgnoreCopyAttribute()
+        { }
     }
 }

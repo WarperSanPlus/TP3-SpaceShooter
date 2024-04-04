@@ -22,6 +22,12 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
     private Vector3 start;
     private float time;
 
+    public void Scale(Vector2 scale)
+    {
+        this.end *= scale;
+        this.height *= scale.y;
+    }
+
     #region MonoBehaviour
 
     /// <inheritdoc/>
@@ -56,7 +62,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
 
     private void OnDisable() => this.SetAllActivatables(true);
 
-    #endregion
+    #endregion MonoBehaviour
 
     #region IActivatable
 
@@ -71,7 +77,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
             item.SetActive(isActive);
     }
 
-    #endregion
+    #endregion IActivatable
 
     #region IResetable
 
@@ -98,19 +104,20 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
 
     public void Trigger() => this.canStart = true;
 
-    #endregion
+    #endregion IResetable
 
     #region BaseEntity
 
     [SerializeField, Extensions.IgnoreCopy]
     private BaseEntity entity;
 
-    #endregion
+    #endregion BaseEntity
 
     #region Animator
 
     [SerializeField, Extensions.IgnoreCopy]
     private Animator animator;
+
     private bool toIdleFlag = false;
 
     private void CheckAnimation()
@@ -125,7 +132,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
         this.toIdleFlag = true;
     }
 
-    #endregion
+    #endregion Animator
 
     #region Static
 
@@ -142,7 +149,7 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
         return new Vector2(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t));
     }
 
-    #endregion
+    #endregion Static
 
     #region Gizmos
 
@@ -168,5 +175,5 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
         Gizmos.DrawCube(this.end, size);
     }
 
-    #endregion
+    #endregion Gizmos
 }
