@@ -1,7 +1,6 @@
 ﻿using Controllers;
 using Interfaces;
 using Singletons;
-using TMPro;
 using UnityEngine;
 
 namespace Entities
@@ -17,13 +16,13 @@ namespace Entities
         [SerializeField, Tooltip("Determines if, on death, its' bullets will be destroyed")]
         private bool destroyBulletsOnDeath = false;
 
-        private void KillSelf(bool fromPlayer)
+        protected void KillSelf(bool fromPlayer)
         {
             if (fromPlayer)
             {
                 // Explode
                 GameObject obj = ObjectPool.GetRandomObject("Explosions");
-                
+
                 obj.transform.position = this.transform.position;
                 obj.SetActive(true);
 
@@ -76,7 +75,7 @@ namespace Entities
             if (sound == null)
                 return;
 
-            ObjectPool.GetPooledObject(sound.name, SFX_Object.NAMESPACE);
+            _ = ObjectPool.GetPooledObject(sound.name, SFX_Object.NAMESPACE);
         }
 
         #endregion SFX

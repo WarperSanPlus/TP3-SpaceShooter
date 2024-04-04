@@ -44,7 +44,7 @@ namespace Movements
             this.timer += Time.fixedDeltaTime;
         }
 
-        #endregion
+        #endregion MonoBehaviour
 
         #region IEnterActivation
 
@@ -56,12 +56,9 @@ namespace Movements
         #region IResetable
 
         /// <inheritdoc/>
-        public void OnReset()
-        {
-            this.timer = 0;
-        }
+        public void OnReset() => this.timer = 0;
 
-        #endregion
+        #endregion IResetable
 
         #region Gizmos
 
@@ -106,6 +103,6 @@ namespace Movements
             }
         }
 
-        #endregion
+        #endregion Gizmos
     }
 }

@@ -7,7 +7,7 @@ namespace Predicates
     public abstract class Predicate : UnityEngine.MonoBehaviour
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="elapsed"></param>
         /// <returns></returns>

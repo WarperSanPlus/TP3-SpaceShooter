@@ -68,7 +68,7 @@ namespace Controllers
             if (!this.enabled || !this.emetter.enabled)
                 return;
 
-            this.emetter.Tick(elapsed, shootOnTimerEnd);
+            _ = this.emetter.Tick(elapsed, shootOnTimerEnd);
         }
 
         #endregion Emetter
@@ -92,7 +92,7 @@ namespace Controllers
             if (this.isAutomaticFire)
                 return;
 
-            this.TickEmetter(Time.deltaTime, true);
+            this.TickEmetter(Time.fixedDeltaTime, true);
         }
 
         #endregion Fire

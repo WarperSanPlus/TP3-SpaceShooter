@@ -33,7 +33,7 @@ namespace Singletons
             this.OnAwake();
         }
 
-        #endregion
+        #endregion MonoBehaviour
 
         #region Virtual
 

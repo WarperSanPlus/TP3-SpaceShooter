@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: fa4aeeac957ebf34d8016dd607529227, type: 2}
-  overrideCompiling: 0
+  overrideCompiling: 1
 --- !u!1001 &2619798258860325808
 PrefabInstance:
   m_ObjectHideFlags: 0

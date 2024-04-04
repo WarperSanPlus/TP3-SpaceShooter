@@ -23,7 +23,7 @@ public class SFX_Object : MonoBehaviour, IResetable
         this.gameObject.SetActive(false);
     }
 
-    #endregion
+    #endregion MonoBehaviour
 
     #region IResetable
 
@@ -39,5 +39,5 @@ public class SFX_Object : MonoBehaviour, IResetable
         this.timer = this.source.clip.length;
     }
 
-    #endregion
+    #endregion IResetable
 }

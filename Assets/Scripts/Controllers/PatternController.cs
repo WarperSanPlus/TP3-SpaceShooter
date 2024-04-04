@@ -1,6 +1,7 @@
 ﻿using Emetters;
 using Extensions;
 using Serializables;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Controllers
@@ -22,12 +23,20 @@ namespace Controllers
         /// <inheritdoc/>
         protected override BaseEmetter[] OnStart()
         {
-            var emetters = new BaseEmetter[this.patterns.Length];
+            var emetters = new List<BaseEmetter>();
 
-            for (var i = 0; i < emetters.Length; i++)
-                emetters[i] = this.patterns[i].emetter;
+            for (var i = 0; i < this.patterns.Length; i++)
+            {
+                BaseEmetter emetter = this.patterns[i].emetter;
 
-            return emetters;
+                // Skip invalid emetters
+                if (emetter == null)
+                    continue;
+
+                emetters.Add(emetter);
+            }
+
+            return emetters.ToArray();
         }
 
         /// <inheritdoc/>
@@ -63,7 +72,7 @@ namespace Controllers
 
         [Header("Patterns")]
         [SerializeField, Tooltip("Determines the patterns this controller will use")]
-        private BulletPattern[] patterns = null;
+        private BulletPattern[] patterns;
 
         private int index = -1;
 
@@ -72,15 +81,18 @@ namespace Controllers
         /// </summary>
         private void AdvancePattern()
         {
+            // Skip if no pattern given
             if (this.patterns.Length == 0)
                 return;
 
             // Increase index
             this.index++;
 
+            // Warp index around
             if (this.index >= this.patterns.Length)
                 this.index = 0;
 
+            // Assign new pattern
             this.pattern = this.patterns[this.index];
         }
 
@@ -90,10 +102,10 @@ namespace Controllers
 
         [Header("Actions")]
         [SerializeField, Tooltip("Actions called when any pattern starts")]
-        private EmetterAction[] startActions = null;
+        private EmetterAction[] startActions;
 
         [SerializeField, Tooltip("Actions called when any pattern ends")]
-        private EmetterAction[] endActions = null;
+        private EmetterAction[] endActions;
 
         #endregion Actions
     }

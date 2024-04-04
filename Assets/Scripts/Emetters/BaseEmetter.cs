@@ -30,7 +30,7 @@ namespace Emetters
         /// <inheritdoc/>
         public void SetActive(bool isActive) => this.enabled = isActive;
 
-        #endregion
+        #endregion IActivatable
 
         #region Author
 
@@ -64,7 +64,7 @@ namespace Emetters
                 return false;
 
             this.Fire();
-            
+
             // Reset the timer
             this.timer = this.cooldown;
 
@@ -89,14 +89,14 @@ namespace Emetters
             var amount = this.GetProjectileCount();
 
             for (var i = 0; i < amount; i++)
-                this.ShootProjectile(i);
+                _ = this.ShootProjectile(i);
         }
 
         /// <summary>
         /// Shoots a projectile with the parameters from the methods
         /// </summary>
         /// <param name="index">Index of the projectile</param>
-        private void ShootProjectile(int index)
+        public GameObject ShootProjectile(int index)
         {
             // Get projectile
             GameObject currentProjectile = this.GetProjectile(index);
@@ -105,7 +105,7 @@ namespace Emetters
             if (currentProjectile == null)
             {
                 Debug.LogWarning("Tried to get a projectile, but no projectile was defined.");
-                return;
+                return null;
             }
 
             // Set up projectile
@@ -132,6 +132,8 @@ namespace Emetters
                 item.SetActive(true);
 
             currentProjectile.SetActive(true);
+
+            return currentProjectile;
         }
 
         #endregion Fire

@@ -27,6 +27,8 @@ namespace Bullets
         [SerializeField, Min(0), Tooltip("Determines how fast a projectile goes")]
         private float speed = 1.0f;
 
+        public float GetSpeed() => this.speed;
+
         [SerializeField, Tooltip("Determines if the projectile will move backwards on the Z axis")]
         private bool moveToZ = true;
 

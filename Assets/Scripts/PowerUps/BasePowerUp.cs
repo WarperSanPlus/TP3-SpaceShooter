@@ -16,7 +16,7 @@ namespace PowerUps
         /// <inheritdoc/>
         public void Collect(BaseEntity source)
         {
-            source.Health(healAmount);
+            source.Health(this.healAmount);
 
             this.gameObject.SetActive(false);
         }

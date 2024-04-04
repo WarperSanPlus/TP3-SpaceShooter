@@ -45,7 +45,7 @@ namespace Entities
         }
 
         /// <inheritdoc/>
-        protected override float OnDamageModifier(float amount, bool isAdding) => isAdding 
+        protected override float OnDamageModifier(float amount, bool isAdding) => isAdding
             ? base.OnDamageModifier(amount, isAdding)
             : amount * 5;
 

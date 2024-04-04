@@ -9,26 +9,49 @@ namespace Movements
         private Rigidbody2D rb;
 
         // Start is called before the first frame update
-        private void Start() => this.rb = this.gameObject.GetComponent<Rigidbody2D>();
+        private void Start()
+        {
+            this.rb = this.gameObject.GetComponent<Rigidbody2D>();
+
+            Camera cam = Camera.main;
+            Vector3 origin = cam.gameObject.transform.position;
+
+            // https://youtu.be/ailbszpt_AI?si=aBLqcL0_CV5yxHin
+            Vector3 stageDimensions = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+
+            this.minPosition.x = origin.x - stageDimensions.x + (this.playerSize.x / 2);
+            this.minPosition.y = origin.y - stageDimensions.y + (this.playerSize.y / 2);
+            this.maxPosition.x = origin.x + stageDimensions.x - (this.playerSize.x / 2);
+            this.maxPosition.y = origin.y + stageDimensions.y - (this.playerSize.y / 2);
+        }
 
         private void FixedUpdate() => this.MoveTowardsTarget();
-
 
         #region Move
 
         private Vector2 direction;
-        [SerializeField, Min(0)] 
+
+        [SerializeField, Min(0)]
         private float speed;
 
-        [Header("Capping Position")]
-        [SerializeField] private Vector2 minPosition;
-        [SerializeField] private Vector2 maxPosition;
+        [SerializeField, Min(0)]
+        private float sneakSpeed;
+
+        private bool isSneaking = false;
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
             this.direction = ctx.ReadValue<Vector2>();
             this.UpdateAnimator();
         }
+
+        public void OnSneak(InputAction.CallbackContext ctx) => this.isSneaking = ctx.ReadValueAsButton();
+
+        [Header("Capping Position")]
+        [SerializeField] private Vector2 playerSize;
+
+        private Vector2 minPosition;
+        private Vector2 maxPosition;
 
         private void MoveTowardsTarget()
         {
@@ -42,19 +65,7 @@ namespace Movements
             this.rb.MovePosition(nextPosition);
         }
 
-        #endregion
-
-        #region Sneak
-        [SerializeField, Min(0)]
-        private float sneakSpeed;
-        private bool isSneaking = false;
-
-        public void OnSneak(InputAction.CallbackContext ctx)
-        {
-            this.isSneaking = ctx.ReadValueAsButton();
-        }
-
-        #endregion
+        #endregion Move
 
         #region Animator
 
@@ -71,6 +82,18 @@ namespace Movements
             this.playerAnimator.SetBool("isGoingLeft", this.direction.x < 0);
         }
 
-        #endregion
+        #endregion Animator
+
+        #region Gizmos
+
+        private void OnDrawGizmosSelected()
+        {
+            if (!this.enabled)
+                return;
+
+            Gizmos.DrawWireCube(this.transform.position, this.playerSize);
+        }
+
+        #endregion Gizmos
     }
 }
