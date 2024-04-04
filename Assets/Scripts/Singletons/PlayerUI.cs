@@ -9,6 +9,7 @@ namespace Singletons
     {
         TextMeshProUGUI playerScore;
         public int Score { get; private set; }
+
         #region Singleton
 
         /// <inheritdoc/>
@@ -20,6 +21,7 @@ namespace Singletons
         void Start()
         {
             playerScore = GetComponentInChildren<TextMeshProUGUI>();
+            Score = 0;
             playerScore.SetText("Score: " + Score);
         }
 
@@ -27,6 +29,18 @@ namespace Singletons
         {
             Score += points;
             playerScore.SetText("Score: " + Score);
+
+
+            int highscore = PlayerPrefs.GetInt("Highscore", 0);
+            if (Score > highscore)
+            {
+                highscore = Score;
+                PlayerPrefs.SetInt("Highscore", highscore);
+                PlayerPrefs.Save();
+            }
+ 
+            PlayerPrefs.SetInt("CurrentScore", Score);
+            PlayerPrefs.Save();
         }
     }
 

@@ -902,8 +902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - {fileID: 8811818497616531908, guid: 706d7d45ed4c86a4cb8800fabe6beb69, type: 3}
-  - {fileID: 5472872489162936813, guid: aa935219526ca6a4db4a0e3ad11debb2, type: 3}
+  - {fileID: 6302216474477900643, guid: 78ad642bd00e881409f6457de55f0fc9, type: 3}
 --- !u!1 &1955894599
 GameObject:
   m_ObjectHideFlags: 0
