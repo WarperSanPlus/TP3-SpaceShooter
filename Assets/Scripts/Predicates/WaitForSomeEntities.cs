@@ -4,25 +4,20 @@ using UnityEngine;
 
 namespace Predicates
 {
+    /// <summary>
+    /// Waits until at least the minimum amount of entities is disabled
+    /// </summary>
     internal class WaitForSomeEntities : Predicate, IPredicateEntity
     {
-        #region IPredicateEntity
-
-        public BaseEntity[] GetEntities() => this.entities;
-
-        public void SetEntities(BaseEntity[] entities) => this.entities = entities;
-
-        #endregion IPredicateEntity
-
-        [SerializeField]
+        [SerializeField, Tooltip("List of entities to check")]
         private BaseEntity[] entities;
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0), Tooltip("Minimum amount of entities needed to activate the predicate")]
         private int minimum;
 
-        public override bool GetCondition(float elapsed)
-            => IsValid(this.entities, this.minimum);
-
+        /// <param name="entities">List of entities to check</param>
+        /// <param name="minimum">Minimum amount of entities needed to activate the predicate</param>
+        /// <returns>Is the predicate complete?</returns>
         public static bool IsValid(BaseEntity[] entities, int minimum)
         {
             var amount = minimum;
@@ -40,5 +35,22 @@ namespace Predicates
 
             return false;
         }
+
+        #region Predicate
+
+        /// <inheritdoc/>
+        public override bool GetCondition(float elapsed) => IsValid(this.entities, this.minimum);
+
+        #endregion
+
+        #region IPredicateEntity
+
+        /// <inheritdoc/>
+        public BaseEntity[] GetEntities() => this.entities;
+
+        /// <inheritdoc/>
+        public void SetEntities(BaseEntity[] entities) => this.entities = entities;
+
+        #endregion IPredicateEntity
     }
 }

@@ -10,7 +10,15 @@ namespace UtilityScripts
         [SerializeField, Tooltip("By how much the rotation is sped up")]
         private float speed = 1f;
 
+        private Vector3 GetRotation(float elapsed) 
+            => this.speed * elapsed * this.direction.normalized;
+
+        #region MonoBehaviour
+
+        /// <inheritdoc/>
         private void FixedUpdate()
-            => this.transform.Rotate(this.speed * Time.fixedDeltaTime * this.direction.normalized);
+            => this.transform.Rotate(this.GetRotation(Time.fixedDeltaTime));
+
+        #endregion
     }
 }

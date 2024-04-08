@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6302216474477900643}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.54, y: 1.41, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 76683140f0d310140b208082a3b4b2ab, type: 2}
-  overrideCompiling: 0
+  overrideCompiling: 1
 --- !u!1001 &4333953003459763079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8713258125711681879, guid: 9f2d19a918d927f48b2bd19e4ac9854e, type: 3}
       propertyPath: m_Name
-      value: Green Fairy (2)
+      value: Green Fairy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (2)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 9151751034894586164, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: end.x
@@ -548,7 +548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8713258125711681879, guid: 9f2d19a918d927f48b2bd19e4ac9854e, type: 3}
       propertyPath: m_Name
-      value: Green Fairy (1)
+      value: Green Fairy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

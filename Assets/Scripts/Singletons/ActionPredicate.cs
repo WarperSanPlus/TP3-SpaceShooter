@@ -163,7 +163,7 @@ namespace Singletons
             /// <summary>
             /// Calls <see cref="IPredicatable.Trigger"/> of the author
             /// </summary>
-            public void Trigger() => this.source?.Trigger();
+            public void Trigger() => this.source?.Trigger(this.guid);
 
             /// <returns>Is <paramref name="source"/> the author of this request?</returns>
             public bool IsSource(IPredicatable source) => this.source == source;

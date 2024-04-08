@@ -6,28 +6,25 @@ namespace Movements
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
-        private Rigidbody2D rb;
+        #region MonoBehaviour
 
-        // Start is called before the first frame update
+        /// <inheritdoc/>
         private void Start()
         {
             this.rb = this.gameObject.GetComponent<Rigidbody2D>();
 
-            Camera cam = Camera.main;
-            Vector3 origin = cam.gameObject.transform.position;
-
-            // https://youtu.be/ailbszpt_AI?si=aBLqcL0_CV5yxHin
-            Vector3 stageDimensions = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-
-            this.minPosition.x = origin.x - stageDimensions.x + (this.playerSize.x / 2);
-            this.minPosition.y = origin.y - stageDimensions.y + (this.playerSize.y / 2);
-            this.maxPosition.x = origin.x + stageDimensions.x - (this.playerSize.x / 2);
-            this.maxPosition.y = origin.y + stageDimensions.y - (this.playerSize.y / 2);
+            this.minPosition = Singletons.SceneScalingManager.GetMin(this.playerSize / 2);
+            this.maxPosition = Singletons.SceneScalingManager.GetMax(this.playerSize / 2);
         }
 
+        /// <inheritdoc/>
         private void FixedUpdate() => this.MoveTowardsTarget();
 
+        #endregion
+
         #region Move
+        
+        private Rigidbody2D rb;
 
         private Vector2 direction;
 
@@ -47,25 +44,35 @@ namespace Movements
 
         public void OnSneak(InputAction.CallbackContext ctx) => this.isSneaking = ctx.ReadValueAsButton();
 
-        [Header("Capping Position")]
-        [SerializeField] private Vector2 playerSize;
-
-        private Vector2 minPosition;
-        private Vector2 maxPosition;
-
         private void MoveTowardsTarget()
         {
             var currentSpeed = this.isSneaking ? this.sneakSpeed : this.speed;
             Vector3 nextPosition = this.transform.position + (Vector3)(this.direction * currentSpeed);
 
-            // Cap next position
-            nextPosition.x = Mathf.Clamp(nextPosition.x, this.minPosition.x, this.maxPosition.x);
-            nextPosition.y = Mathf.Clamp(nextPosition.y, this.minPosition.y, this.maxPosition.y);
-
-            this.rb.MovePosition(nextPosition);
+            this.rb.MovePosition(this.ClampPosition(nextPosition));
         }
 
         #endregion Move
+
+        #region Capping Position
+
+        [Header("Capping Position")]
+        [SerializeField]
+        private Vector2 playerSize;
+
+        private Vector2 minPosition;
+        private Vector2 maxPosition;
+
+        private Vector3 ClampPosition(Vector3 position)
+        {
+            // Clamp next position
+            position.x = Mathf.Clamp(position.x, this.minPosition.x, this.maxPosition.x);
+            position.y = Mathf.Clamp(position.y, this.minPosition.y, this.maxPosition.y);
+
+            return position;
+        }
+
+        #endregion
 
         #region Animator
 

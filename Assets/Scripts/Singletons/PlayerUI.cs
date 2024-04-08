@@ -1,11 +1,17 @@
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Singletons
 {
     public class PlayerUI : Singleton<PlayerUI>
     {
+        [SerializeField]
         private TextMeshProUGUI playerScore;
         public int Score { get; private set; }
+
+        [SerializeField]
+        private Slider playerHealth;
 
         #region Singleton
 
@@ -17,7 +23,6 @@ namespace Singletons
         // Start is called before the first frame update
         private void Start()
         {
-            this.playerScore = this.GetComponentInChildren<TextMeshProUGUI>();
             this.Score = 0;
             this.playerScore.SetText("Score: " + this.Score);
         }
@@ -38,6 +43,14 @@ namespace Singletons
  
             PlayerPrefs.SetInt("CurrentScore", this.Score);
             PlayerPrefs.Save();
+        }
+
+        public void SetHealth(float value)
+        {
+            if (this.playerHealth == null)
+                return;
+
+            this.playerHealth.value = value;
         }
     }
 }

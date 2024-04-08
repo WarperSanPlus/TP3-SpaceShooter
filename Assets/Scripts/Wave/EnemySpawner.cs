@@ -7,41 +7,34 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 public class EnemySpawner : MonoBehaviour, IPredicatable
 {
     public GameObject[] waves;
     private float timer;
 
-    private Vector2 scaleMultiplier;
-
-    private void Start()
-    {
-        Vector2 defaultScale = new(48.02f, 30.00f); // aka 16:10 aspect
-        Vector2 currentScale = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-
-        this.scaleMultiplier = currentScale / defaultScale;
-
-        _ = this.StartCoroutine(this.Prepare_Spawner());
-    }
+    private void Start() => this.StartCoroutine(this.Prepare_Spawner());
 
     private System.Collections.IEnumerator Prepare_Spawner()
     {
         PrepareWaves(this.waves);
         yield return new WaitForEndOfFrame();
-        this.Trigger();
+        this.OnTrigger();
     }
 
-    public void Trigger()
+    private void OnTrigger()
     {
         this.RemoveAll();
         this.timer = 10;
         this.SpawnWave();
     }
 
-    public void SpawnWave()
+    public void SpawnWave(GameObject wave = null)
     {
-        List<GameObject> enemies = LoadWave(this.waves[Random.Range(0, this.waves.Length)], this.scaleMultiplier);
+        wave = wave != null ? wave : this.waves[Random.Range(0, this.waves.Length)];
+
+        List<GameObject> enemies = LoadWave(wave, SceneScalingManager.Multiplier);
 
         // Wait until all the enemies are dead or timer to run out
         _ = this.Add(_ => !enemies.Any(o => o.activeInHierarchy));
@@ -52,6 +45,12 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
         //    return this.timer <= 0;
         //});
     }
+
+    #region IPredcatable
+
+    public void Trigger(System.Guid guid) => this.OnTrigger();
+
+    #endregion
 
     #region Static
 
@@ -69,13 +68,15 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
         // Get all enemies
         foreach (Transform child in prefab.transform)
         {
-            Transform sourcePrefab = PrefabUtility.GetCorrespondingObjectFromSource(child);
+            //Transform sourcePrefab = PrefabUtility.GetCorrespondingObjectFromSource(child);
 
-            if (sourcePrefab == null)
-                continue;
+            //if (sourcePrefab == null)
+            //    continue;
+
+            string name = child.gameObject.name;
 
             // Get enemy
-            GameObject enemy = ObjectPool.GetPooledObject(sourcePrefab.name, Entities.EnemyEntity.NAMESPACE);
+            GameObject enemy = ObjectPool.GetPooledObject(name, Entities.EnemyEntity.NAMESPACE);
 
             if (enemy == null)
                 continue;

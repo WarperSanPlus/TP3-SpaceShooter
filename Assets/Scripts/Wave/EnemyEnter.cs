@@ -102,9 +102,14 @@ public class EnemyEnter : MonoBehaviour, IResetable, IPredicatable
         this.canStart = predicate == null;
     }
 
-    public void Trigger() => this.canStart = true;
-
     #endregion IResetable
+
+    #region IPredicatable
+
+    /// <inheritdoc/>
+    public void Trigger(System.Guid guid) => this.canStart = true;
+
+    #endregion
 
     #region BaseEntity
 

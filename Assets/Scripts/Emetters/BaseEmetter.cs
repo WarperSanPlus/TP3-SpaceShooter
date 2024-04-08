@@ -98,6 +98,9 @@ namespace Emetters
         /// <param name="index">Index of the projectile</param>
         public GameObject ShootProjectile(int index)
         {
+            if (!this.isActiveAndEnabled)
+                return null;
+
             // Get projectile
             GameObject currentProjectile = this.GetProjectile(index);
 

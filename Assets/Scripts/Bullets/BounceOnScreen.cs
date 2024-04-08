@@ -1,4 +1,5 @@
 using Bullets;
+using Singletons;
 using UnityEngine;
 
 public class BounceOnScreen : MonoBehaviour
@@ -19,38 +20,34 @@ public class BounceOnScreen : MonoBehaviour
             return;
         }
 
-        Camera cam = Camera.main;
-        Vector3 origin = cam.gameObject.transform.position;
-
-        // https://youtu.be/ailbszpt_AI?si=aBLqcL0_CV5yxHin
-        Vector3 stageDimensions = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-
-        this.minPosition.x = origin.x - stageDimensions.x + (this.playerSize.x / 2);
-        this.minPosition.y = origin.y - stageDimensions.y + (this.playerSize.y / 2);
-        this.maxPosition.x = origin.x + stageDimensions.x - (this.playerSize.x / 2);
-        this.maxPosition.y = origin.y + stageDimensions.y - (this.playerSize.y / 2);
+        this.minPosition = SceneScalingManager.GetMin(this.playerSize / 2);
+        this.maxPosition = SceneScalingManager.GetMax(this.playerSize / 2);
     }
 
     private void FixedUpdate()
     {
-        // Angle
+        var angle = this.GetBounceAngle(Time.fixedDeltaTime);
+        if (angle != 0)
+            this.Bounce(angle);
+    }
+
+    private float GetBounceAngle(float elapsed)
+    {
+        // Get current angle
         var angleDir = Mathf.Deg2Rad * this.transform.rotation.eulerAngles.z;
 
-        // Get direction
+        // Get the direction of the object
         Vector2 dir = new(Mathf.Cos(angleDir), Mathf.Sin(angleDir));
 
-        // Get speed
-        var speed = this.bullet.GetSpeed();
-
-        // Get next position
-        Vector3 nextPos = this.transform.position + (speed * Time.fixedDeltaTime * this.transform.forward);
+        // Get the next position of the bullet
+        Vector3 nextPos = this.bullet.GetNextPosition(elapsed);
 
         var outsideX = nextPos.x < this.minPosition.x || nextPos.x > this.maxPosition.x;
         var outsideY = nextPos.y < this.minPosition.y || nextPos.y > this.maxPosition.y;
 
         // If not going outside
         if (!outsideX && !outsideY)
-            return;
+            return 0;
 
         var differentDirections = Mathf.Sign(dir.y) != Mathf.Sign(dir.x);
         var angle = outsideX ? differentDirections ? 1 : -1 : (float)(differentDirections ? -1 : 1);
@@ -60,9 +57,11 @@ public class BounceOnScreen : MonoBehaviour
             diff = 90 - diff;
 
         angle *= 180 - (2 * diff);
-
-        this.Bounce(angle);
+        return angle;
     }
 
+    /// <summary>
+    /// Rotates the object by <paramref name="rotation"/> degrees
+    /// </summary>
     private void Bounce(float rotation) => this.transform.Rotate(0, 0, rotation);
 }

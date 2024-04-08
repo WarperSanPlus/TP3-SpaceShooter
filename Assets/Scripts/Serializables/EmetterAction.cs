@@ -2,6 +2,9 @@
 
 namespace Serializables
 {
+    /// <summary>
+    /// Defines an action of an emetter
+    /// </summary>
     [System.Serializable]
     public struct EmetterAction
     {

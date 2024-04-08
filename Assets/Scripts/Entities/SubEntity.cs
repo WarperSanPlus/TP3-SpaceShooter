@@ -13,7 +13,7 @@ namespace Entities
         #region IPredicatable
 
         /// <inheritdoc/>
-        public void Trigger() => this.KillSelf(false);
+        public void Trigger(Guid guid) => this.KillSelf(false);
 
         #endregion IPredicatable
     }

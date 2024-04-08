@@ -73,11 +73,18 @@ namespace Entities
         [SerializeField, Tooltip("Current health of the entity")]
         private float health;
 
+        public float Health => this.health;
+
         [SerializeField, Tooltip("Maximum health reachable by the entity")]
         protected float MaxHealth;
 
         [Tooltip("Determines if this entity can take damage")]
         public bool isInvicible = true;
+
+        // I used this notion before
+        // https://github.com/WarperSan/BTD-Adventure/blob/f6e0b1a2e7fc8d7c65ae40d72620b334e531e766/Abstract/Entity.cs#L139
+        public delegate void HealthChanged (float newHealth, float oldHealth, float maxHealth);
+        public HealthChanged onHealthChanged;
 
         private void ManageCollision(Collider2D collider)
         {
@@ -95,7 +102,7 @@ namespace Entities
             collectable?.Collect(this);
         }
 
-        public void Health(int amount) => this.AlterHealth(amount, true);
+        public void Heal(int amount) => this.AlterHealth(amount, true);
 
         public void Damage(float amount)
         {
@@ -131,6 +138,8 @@ namespace Entities
                 oldHealth,
                 this.MaxHealth
                 );
+
+            this.onHealthChanged?.Invoke(this.health, oldHealth, this.MaxHealth);
 
             // If the entity will die
             if (this.health <= 0f)

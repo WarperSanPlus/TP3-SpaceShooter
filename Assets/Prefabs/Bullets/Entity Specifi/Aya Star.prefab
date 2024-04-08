@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2803369459187621125, guid: 7863eae5b4e147a47bb7ec29c38389aa, type: 3}
       propertyPath: Lifespan
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4163717144432134442, guid: 7863eae5b4e147a47bb7ec29c38389aa, type: 3}
       propertyPath: speed
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4163717144432134442, guid: 7863eae5b4e147a47bb7ec29c38389aa, type: 3}
       propertyPath: moveToZ

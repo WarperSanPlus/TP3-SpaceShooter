@@ -255,12 +255,14 @@ namespace Singletons
                 return;
             }
 
+            var currentCount = parent.Find(setting.Prefab.name)?.childCount ?? 0;
+
             // If there are enough items, skip
-            if (!amountInAddition && parent.childCount >= setting.amount)
+            if (!amountInAddition && currentCount >= setting.amount)
                 return;
 
             // Get the amount to spawn
-            setting.amount = amountInAddition ? setting.amount : parent.childCount - setting.amount;
+            setting.amount = amountInAddition ? setting.amount : setting.amount - currentCount;
 
             // Create the setting
             Instance.CreateSetting(setting, parent, @namespace);

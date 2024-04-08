@@ -8,23 +8,26 @@ namespace UtilityScripts
         [Tooltip("Direction of the movement")]
         public Vector3 direction;
 
-        [SerializeField, Tooltip("By how much the movement is sped up")]
+        [Tooltip("By how much the movement is sped up")]
         public float speed;
 
-        // Update is called once per frame
-        private void FixedUpdate()
-            => this.transform.Translate(this.GetDirection(), Space.World);
+        private Vector3 Direction => this.GetDirection(this.direction, Time.fixedDeltaTime);
 
-        private Vector3 GetDirection() => this.GetDirection(this.direction);
+        public Vector3 GetDirection(Vector3 dir, float elapsed) => this.speed * elapsed * dir.normalized;
 
-        public Vector3 GetDirection(Vector3 dir) => this.speed * Time.fixedDeltaTime * dir.normalized;
+        #region MonoBehaviour
 
-        #region IEnterActivation
+        /// <inheritdoc/>
+        private void FixedUpdate() => this.transform.Translate(this.Direction, Space.World);
+
+        #endregion
+
+        #region IActivatable
 
         /// <inheritdoc/>
         public void SetActive(bool isActive) => this.enabled = isActive;
 
-        #endregion IEnterActivation
+        #endregion IActivatable
 
         #region Gizmos
 
@@ -34,7 +37,7 @@ namespace UtilityScripts
                 return;
 
             Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(this.transform.position, this.transform.position + (this.GetDirection() * 10));
+            Gizmos.DrawLine(this.transform.position, this.transform.position + (this.Direction * 10));
         }
 
         #endregion Gizmos

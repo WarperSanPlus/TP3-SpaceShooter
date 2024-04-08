@@ -2,7 +2,6 @@
 using Emetters;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Entities
 {
@@ -39,9 +38,14 @@ namespace Entities
             if (index != -1)
                 this.controller.SetEmetter(this.emetters[index].emetter);
 
+            Singletons.PlayerUI.Instance.SetHealth(newHealth / maxHealth);
+
             // Si le joueur n'a plus de vie, on change de scene
             if (newHealth <= 0)
-                SceneManager.LoadScene("HighScore");
+            {
+                this.PlaySound(this.DeathSound);
+                Singletons.SceneOperator.LoadSceneAsync(Singletons.Scenes.HIGHSCORE);
+            }
         }
 
         /// <inheritdoc/>
@@ -50,6 +54,20 @@ namespace Entities
             : amount * 5;
 
         #endregion BaseEntity
+
+        #region SFX
+
+        [SerializeField]
+        private GameObject DeathSound;
+
+        private void PlaySound(GameObject prefab)
+        {
+            var obj = GameObject.Instantiate(prefab);
+            obj.GetComponent<SFX_Object>().OnReset();
+            obj.SetActive(true);
+        }
+
+        #endregion
 
         #region EmetterForHealth
 

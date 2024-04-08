@@ -9,12 +9,9 @@ public class SFX_Object : MonoBehaviour, IResetable
     private AudioSource source;
     private float timer = 0f;
 
-    #region MonoBehaviour
-
-    /// <inheritdoc/>
-    private void FixedUpdate()
+    private void TickTimer(float elapsed)
     {
-        this.timer -= Time.fixedDeltaTime;
+        this.timer -= elapsed;
 
         if (this.timer > 0f)
             return;
@@ -22,6 +19,11 @@ public class SFX_Object : MonoBehaviour, IResetable
         // Disable object
         this.gameObject.SetActive(false);
     }
+
+    #region MonoBehaviour
+
+    /// <inheritdoc/>
+    private void FixedUpdate() => this.TickTimer(Time.fixedDeltaTime);
 
     #endregion MonoBehaviour
 

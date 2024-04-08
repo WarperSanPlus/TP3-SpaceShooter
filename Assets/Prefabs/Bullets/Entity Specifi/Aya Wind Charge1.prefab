@@ -94,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9163690960334846321, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
       propertyPath: m_Name
-      value: Aya Wind Charge
+      value: Aya Wind Charge1
       objectReference: {fileID: 0}
     - target: {fileID: 9163690960334846321, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
       propertyPath: m_Layer
@@ -111,13 +111,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9163690960334846321, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7828214092059701848}
-    - targetCorrespondingSourceObject: {fileID: 9163690960334846321, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 8549548678900101178}
     - targetCorrespondingSourceObject: {fileID: 9163690960334846321, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
       insertIndex: -1
       addedObject: {fileID: 735417762568209583}
+    - targetCorrespondingSourceObject: {fileID: 9163690960334846321, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8702641096691717766}
     - targetCorrespondingSourceObject: {fileID: 1478224936300397966, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8506228400573083011}
@@ -130,19 +130,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9163690960334846321, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
   m_PrefabInstance: {fileID: 8084204407706652453}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7828214092059701848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088504911449552468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 558df81329325ce4bbd0c071ac4448a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSize: {x: 0, y: 0}
 --- !u!114 &8549548678900101178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +178,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8702641096691717766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088504911449552468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558df81329325ce4bbd0c071ac4448a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSize: {x: 0, y: 0}
 --- !u!212 &3662127365260031766 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4819591006574819379, guid: 5ec6d129f982c9749aa8535c8fb63704, type: 3}
