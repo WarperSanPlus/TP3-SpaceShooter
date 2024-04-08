@@ -26,8 +26,7 @@ namespace Movements
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
-            this.direction = ctx.ReadValue<Vector2>();
-            this.UpdateAnimator();
+            this.SetDirection(ctx.ReadValue<Vector2>());
         }
 
         private void MoveTowardsTarget()
@@ -42,6 +41,11 @@ namespace Movements
             this.rb.MovePosition(nextPosition);
         }
 
+        public void SetDirection(Vector2 direction)
+        {
+            this.direction = direction;
+            this.UpdateAnimator();
+        }
         #endregion
 
         #region Sneak
@@ -51,9 +55,13 @@ namespace Movements
 
         public void OnSneak(InputAction.CallbackContext ctx)
         {
-            this.isSneaking = ctx.ReadValueAsButton();
+            SetSneak(ctx.ReadValueAsButton());
         }
 
+        public void SetSneak(bool sneak)
+        {
+            this.isSneaking = sneak;
+        }
         #endregion
 
         #region Animator

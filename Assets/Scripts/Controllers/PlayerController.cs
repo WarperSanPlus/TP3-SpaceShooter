@@ -94,6 +94,10 @@ namespace Controllers
 
             this.TickEmetter(Time.deltaTime, true);
         }
+        public void SetRequestFire(bool value)
+        {
+            this.requestFire = value;
+        }
 
         #endregion Fire
     }
