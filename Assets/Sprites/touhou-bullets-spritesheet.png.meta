@@ -107,6 +107,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
+    buildTarget: iPhone
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -627,6 +628,17 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: FireButton
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 598
+        width: 16
+        height: 16
+      alignment: 0
+      spriteID: 2194d55c041506341b2be9d0a25291ad
+      internalID: 844377693
+    - serializedVersion: 2
       name: aya-wind0
       rect:
         serializedVersion: 2
@@ -742,6 +754,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      FireButton: 844377693
       aya-wind0: -649340589
       aya-wind1: -438292768
       big-star-gray: -498399760

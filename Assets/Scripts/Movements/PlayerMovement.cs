@@ -38,11 +38,10 @@ namespace Movements
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
-            this.direction = ctx.ReadValue<Vector2>();
-            this.UpdateAnimator();
+            this.SetDirection(ctx.ReadValue<Vector2>());
         }
 
-        public void OnSneak(InputAction.CallbackContext ctx) => this.isSneaking = ctx.ReadValueAsButton();
+        public void OnSneak(InputAction.CallbackContext ctx) => this.SetSneak(ctx.ReadValueAsButton());
 
         private void MoveTowardsTarget()
         {
@@ -52,6 +51,11 @@ namespace Movements
             this.rb.MovePosition(this.ClampPosition(nextPosition));
         }
 
+        public void SetDirection(Vector2 direction)
+        {
+            this.direction = direction;
+            this.UpdateAnimator();
+        }
         #endregion Move
 
         #region Capping Position
@@ -72,6 +76,10 @@ namespace Movements
             return position;
         }
 
+        public void SetSneak(bool sneak)
+        {
+            this.isSneaking = sneak;
+        }
         #endregion
 
         #region Animator
