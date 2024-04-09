@@ -20,3 +20,4 @@ MonoBehaviour:
     amount: 1
     amountSpawned: 0
   bulletSetting: []
+  links: []

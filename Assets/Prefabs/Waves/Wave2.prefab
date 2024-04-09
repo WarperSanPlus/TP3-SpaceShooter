@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: fa4aeeac957ebf34d8016dd607529227, type: 2}
-  overrideCompiling: 0
+  overrideCompiling: 1
 --- !u!1001 &2619798258860325808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 502225619796413641, guid: b3e605b319b651444aa901e8298be44b, type: 3}
       propertyPath: m_Name
-      value: Hatted Red Fairy (1)
+      value: Hatted Red Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 2658462923139073200, guid: b3e605b319b651444aa901e8298be44b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -330,7 +330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (2)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_IsActive
@@ -447,7 +447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (4)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_IsActive
@@ -663,7 +663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (3)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_IsActive
@@ -780,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (1)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 9151751034894586164, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: end.x
@@ -890,7 +890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (5)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_IsActive

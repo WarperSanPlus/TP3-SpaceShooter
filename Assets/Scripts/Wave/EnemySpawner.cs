@@ -7,31 +7,37 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 public class EnemySpawner : MonoBehaviour, IPredicatable
 {
     public GameObject[] waves;
     private float timer;
 
-    private void Start()
+    private void Start() => this.StartCoroutine(this.Prepare_Spawner());
+
+    private System.Collections.IEnumerator Prepare_Spawner()
     {
         PrepareWaves(this.waves);
-        this.Trigger();
+        yield return new WaitForEndOfFrame();
+        this.OnTrigger();
     }
 
-    public void Trigger()
+    private void OnTrigger()
     {
-        this.Remove();
+        this.RemoveAll();
         this.timer = 10;
         this.SpawnWave();
     }
 
-    public void SpawnWave()
+    public void SpawnWave(GameObject wave = null)
     {
-        List<GameObject> enemies = LoadWave(this.waves[Random.Range(0, this.waves.Length)]);
+        wave = wave != null ? wave : this.waves[Random.Range(0, this.waves.Length)];
+
+        List<GameObject> enemies = LoadWave(wave, SceneScalingManager.Multiplier);
 
         // Wait until all the enemies are dead or timer to run out
-        this.Add(_ => !enemies.Any(o => o.activeInHierarchy));
+        _ = this.Add(_ => !enemies.Any(o => o.activeInHierarchy));
         //this.Add((float elapsed) =>
         //{
         //    this.timer -= elapsed;
@@ -40,13 +46,19 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
         //});
     }
 
+    #region IPredcatable
+
+    public void Trigger(System.Guid guid) => this.OnTrigger();
+
+    #endregion
+
     #region Static
 
     /// <summary>
     /// Places all the enemies in the given prefab
     /// </summary>
     /// <returns>List of the enemies created</returns>
-    private static List<GameObject> LoadWave(GameObject prefab)
+    private static List<GameObject> LoadWave(GameObject prefab, Vector2 scaleMultiplier)
     {
         var enemies = new List<GameObject>();
 
@@ -56,24 +68,27 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
         // Get all enemies
         foreach (Transform child in prefab.transform)
         {
-            Transform sourcePrefab = PrefabUtility.GetCorrespondingObjectFromSource(child);
+            //Transform sourcePrefab = PrefabUtility.GetCorrespondingObjectFromSource(child);
 
-            if (sourcePrefab == null)
-                continue;
+            //if (sourcePrefab == null)
+            //    continue;
+
+            string name = child.gameObject.name;
 
             // Get enemy
-            GameObject enemy = ObjectPool.GetPooledObject(sourcePrefab.name, Entities.EnemyEntity.NAMESPACE);
+            GameObject enemy = ObjectPool.GetPooledObject(name, Entities.EnemyEntity.NAMESPACE);
 
             if (enemy == null)
                 continue;
 
             // Place enemy
-            enemy.transform.position = child.position;
+            enemy.transform.position = child.position * scaleMultiplier;
 
             // Set up enemy
             EnemyEnter enter = enemy.GetComponentInChildren<EnemyEnter>();
             EnemyEnter childEnter = child.GetComponentInChildren<EnemyEnter>();
             enter.Copy(childEnter);
+            enter.Scale(scaleMultiplier);
 
             // Remove all Predicates
             foreach (Predicates.Predicate item in enter.GetComponents<Predicates.Predicate>())
@@ -96,6 +111,7 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
 
         return enemies;
     }
+
     private static void SetUpLinks(List<GameObject> enemies, WaveDataMaker wave)
     {
         var references = new List<(BaseEntity entity, IPredicateEntity listener)>();
@@ -169,5 +185,5 @@ public class EnemySpawner : MonoBehaviour, IPredicatable
             ObjectPool.PreparePoolSetting(item.Value, Entities.EnemyEntity.NAMESPACE, false);
     }
 
-    #endregion
+    #endregion Static
 }

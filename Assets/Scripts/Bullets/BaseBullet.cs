@@ -27,6 +27,8 @@ namespace Bullets
         [SerializeField, Min(0), Tooltip("Determines how fast a projectile goes")]
         private float speed = 1.0f;
 
+        public float Speed => this.speed;
+
         [SerializeField, Tooltip("Determines if the projectile will move backwards on the Z axis")]
         private bool moveToZ = true;
 
@@ -35,13 +37,21 @@ namespace Bullets
         /// </summary>
         private void TickTravel(float elapsed)
         {
+            Vector3 movement = this.GetNextPosition(elapsed) - this.transform.position;
+
+            this.transform.Translate(movement, Space.World);
+        }
+
+        /// <returns>Next position of this bullet</returns>
+        public Vector3 GetNextPosition(float elapsed)
+        {
             // Move forward
-            Vector3 nextPos = this.speed * elapsed * Vector3.up;
+            Vector3 nextPos = this.transform.position + (this.speed * elapsed * this.transform.up);
 
             if (this.moveToZ)
                 nextPos.z += elapsed;
 
-            this.transform.Translate(nextPos, Space.Self);
+            return nextPos;
         }
 
         #endregion Movement

@@ -108,6 +108,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: iPhone
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -635,14 +636,109 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
+      spriteID: 2194d55c041506341b2be9d0a25291ad
+      internalID: 844377693
+    - serializedVersion: 2
+      name: aya-wind0
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 564
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47bb67571f15fcb4e90eac0801b62a79
+      internalID: -649340589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: aya-wind1
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 564
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 738d9d93a024d1e4d808d4820a0f9a6e
+      internalID: -438292768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: star_gray
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 646
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 766d7ee749acf2b4c828b6d56879bbd4
+      internalID: 979312293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big-star-gray
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 523
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4196c5a1a36971347837a88ed5b80adb
+      internalID: -498399760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flashbang
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 14
+        width: 256
+        height: 256
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2194d55c041506341b2be9d0a25291ad
-      internalID: 844377693
+      spriteID: dbbe44737172daf4ab6973991b6e95d1
+      internalID: -1389239763
       vertices: []
       indices: 
       edges: []
@@ -659,11 +755,15 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       FireButton: 844377693
+      aya-wind0: -649340589
+      aya-wind1: -438292768
+      big-star-gray: -498399760
       big-star-red: -1159519261
       explode-blue: 536750140
       explode-green: 2043206244
       explode-orange: -517343290
       explode-yellow: 1957835910
+      flashbang: -420290194
       heart_blue: 1424042777
       heart_yellow: 769677318
       knife-gray: 455777384
@@ -681,6 +781,7 @@ TextureImporter:
       star-blue: -1878715164
       star-cyan: 232785815
       star-red: 229207437
+      star_gray: 979312293
       star_yellow: -537755990
       touhou-bullets-spritesheet_0: 513246255
   mipmapLimitGroupName: 

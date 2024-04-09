@@ -2,6 +2,6 @@
 {
     public interface IPredicatable
     {
-        public void Trigger();
+        public void Trigger(System.Guid guid);
     }
 }

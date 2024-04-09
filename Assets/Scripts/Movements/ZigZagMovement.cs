@@ -22,13 +22,7 @@ namespace Movements
 
         private float GetPosition(float x) => Mathf.Sin(x) * this.speed / 2;
 
-        #region MonoBehaviour
-
-        /// <inheritdoc/>
-        private void Start() => this.moveByVector = this.gameObject.GetComponent<MoveByVector>();
-
-        /// <inheritdoc/>
-        private void FixedUpdate()
+        private void AdvanceTravel(float elapsed)
         {
             Vector3 dir = this.moveByVector.direction;
 
@@ -41,10 +35,18 @@ namespace Movements
 
             this.moveByVector.direction = dir;
 
-            this.timer += Time.fixedDeltaTime;
+            this.timer += elapsed;
         }
 
-        #endregion
+        #region MonoBehaviour
+
+        /// <inheritdoc/>
+        private void Start() => this.moveByVector = this.gameObject.GetComponent<MoveByVector>();
+
+        /// <inheritdoc/>
+        private void FixedUpdate() => this.AdvanceTravel(Time.fixedDeltaTime);
+
+        #endregion MonoBehaviour
 
         #region IEnterActivation
 
@@ -56,12 +58,9 @@ namespace Movements
         #region IResetable
 
         /// <inheritdoc/>
-        public void OnReset()
-        {
-            this.timer = 0;
-        }
+        public void OnReset() => this.timer = 0;
 
-        #endregion
+        #endregion IResetable
 
         #region Gizmos
 
@@ -95,7 +94,7 @@ namespace Movements
                 else
                     dir.y = pos;
 
-                dir = this.moveByVector.GetDirection(dir);
+                dir = this.moveByVector.GetDirection(dir, Time.fixedDeltaTime);
 
                 // Get next position
                 Vector3 nextPos = currentPos + dir;
@@ -106,6 +105,6 @@ namespace Movements
             }
         }
 
-        #endregion
+        #endregion Gizmos
     }
 }

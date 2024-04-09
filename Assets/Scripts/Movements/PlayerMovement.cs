@@ -6,39 +6,49 @@ namespace Movements
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
-        private Rigidbody2D rb;
+        #region MonoBehaviour
 
-        // Start is called before the first frame update
-        private void Start() => this.rb = this.gameObject.GetComponent<Rigidbody2D>();
+        /// <inheritdoc/>
+        private void Start()
+        {
+            this.rb = this.gameObject.GetComponent<Rigidbody2D>();
 
+            this.minPosition = Singletons.SceneScalingManager.GetMin(this.playerSize / 2);
+            this.maxPosition = Singletons.SceneScalingManager.GetMax(this.playerSize / 2);
+        }
+
+        /// <inheritdoc/>
         private void FixedUpdate() => this.MoveTowardsTarget();
 
+        #endregion
 
         #region Move
+        
+        private Rigidbody2D rb;
 
         private Vector2 direction;
-        [SerializeField, Min(0)] 
+
+        [SerializeField, Min(0)]
         private float speed;
 
-        [Header("Capping Position")]
-        [SerializeField] private Vector2 minPosition;
-        [SerializeField] private Vector2 maxPosition;
+        [SerializeField, Min(0)]
+        private float sneakSpeed;
+
+        private bool isSneaking = false;
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
             this.SetDirection(ctx.ReadValue<Vector2>());
         }
 
+        public void OnSneak(InputAction.CallbackContext ctx) => this.SetSneak(ctx.ReadValueAsButton());
+
         private void MoveTowardsTarget()
         {
             var currentSpeed = this.isSneaking ? this.sneakSpeed : this.speed;
             Vector3 nextPosition = this.transform.position + (Vector3)(this.direction * currentSpeed);
 
-            // Cap next position
-            nextPosition.x = Mathf.Clamp(nextPosition.x, this.minPosition.x, this.maxPosition.x);
-            nextPosition.y = Mathf.Clamp(nextPosition.y, this.minPosition.y, this.maxPosition.y);
-
-            this.rb.MovePosition(nextPosition);
+            this.rb.MovePosition(this.ClampPosition(nextPosition));
         }
 
         public void SetDirection(Vector2 direction)
@@ -46,16 +56,24 @@ namespace Movements
             this.direction = direction;
             this.UpdateAnimator();
         }
-        #endregion
+        #endregion Move
 
-        #region Sneak
-        [SerializeField, Min(0)]
-        private float sneakSpeed;
-        private bool isSneaking = false;
+        #region Capping Position
 
-        public void OnSneak(InputAction.CallbackContext ctx)
+        [Header("Capping Position")]
+        [SerializeField]
+        private Vector2 playerSize;
+
+        private Vector2 minPosition;
+        private Vector2 maxPosition;
+
+        private Vector3 ClampPosition(Vector3 position)
         {
-            SetSneak(ctx.ReadValueAsButton());
+            // Clamp next position
+            position.x = Mathf.Clamp(position.x, this.minPosition.x, this.maxPosition.x);
+            position.y = Mathf.Clamp(position.y, this.minPosition.y, this.maxPosition.y);
+
+            return position;
         }
 
         public void SetSneak(bool sneak)
@@ -79,6 +97,18 @@ namespace Movements
             this.playerAnimator.SetBool("isGoingLeft", this.direction.x < 0);
         }
 
-        #endregion
+        #endregion Animator
+
+        #region Gizmos
+
+        private void OnDrawGizmosSelected()
+        {
+            if (!this.enabled)
+                return;
+
+            Gizmos.DrawWireCube(this.transform.position, this.playerSize);
+        }
+
+        #endregion Gizmos
     }
 }

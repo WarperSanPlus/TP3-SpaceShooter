@@ -42,6 +42,6 @@ namespace Emetters
             return target != null ? target.rotation : throw new System.NullReferenceException();
         }
 
-        #endregion
+        #endregion BaseEmetter
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Serializables
 {
     /// <summary>
     /// Defines how this object pool should initializes
     /// </summary>
-    [Serializable]
+    [System.Serializable]
     public struct PoolingSetting
     {
         [Tooltip("GameObject to spawn")]

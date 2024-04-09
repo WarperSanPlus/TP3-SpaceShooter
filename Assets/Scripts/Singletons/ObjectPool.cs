@@ -17,7 +17,7 @@ namespace Singletons
         /// <inheritdoc/>
         protected override void OnAwake() => this.InitializePooledTypes();
 
-        #endregion
+        #endregion Singleton
 
         #region Evaluation
 
@@ -61,6 +61,7 @@ namespace Singletons
             // Reput
             this.pooledTypes[typeIndex].Settings[settingIndex].amountSpawned++;
         }
+
 #endif
 
         #endregion Evaluation
@@ -145,7 +146,7 @@ namespace Singletons
             return amount;
         }
 
-        #endregion
+        #endregion Getters
 
         #region Pooled Object
 
@@ -187,7 +188,7 @@ namespace Singletons
         private static string GetKey(string prefabName, string @namespace) => @namespace + "/" + prefabName;
 
         /// <summary>
-        /// Disables every objects under <paramref name="namespace"/> 
+        /// Disables every objects under <paramref name="namespace"/>
         /// that matches <paramref name="predicate"/>
         /// </summary>
         /// <param name="namespace">Name of the category of the object</param>
@@ -231,11 +232,11 @@ namespace Singletons
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="type"></param>
         /// <param name="amountInAddition">
-        /// Determines if the setting should add <see cref="PoolingSetting.amount"/> 
+        /// Determines if the setting should add <see cref="PoolingSetting.amount"/>
         /// or if it should have at least <see cref="PoolingSetting.amount"/>
         /// </param>
         public static void PreparePoolSetting(PoolingSetting setting, string @namespace, bool amountInAddition = true)
@@ -254,12 +255,14 @@ namespace Singletons
                 return;
             }
 
+            var currentCount = parent.Find(setting.Prefab.name)?.childCount ?? 0;
+
             // If there are enough items, skip
-            if (!amountInAddition && parent.childCount >= setting.amount)
+            if (!amountInAddition && currentCount >= setting.amount)
                 return;
 
             // Get the amount to spawn
-            setting.amount = amountInAddition ? setting.amount : parent.childCount - setting.amount;
+            setting.amount = amountInAddition ? setting.amount : setting.amount - currentCount;
 
             // Create the setting
             Instance.CreateSetting(setting, parent, @namespace);

@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Serializables
 {
     /// <summary>
     /// Defines the category under which the settings are
     /// </summary>
-    [Serializable]
+    [System.Serializable]
     public struct PoolingType
     {
         [Tooltip("Under which category those objects are")]

@@ -28,14 +28,17 @@ namespace Controllers
         /// <inheritdoc/>
         public void SetActive(bool isActive) => this.enabled = isActive;
 
-        #endregion
+        #endregion IActivatable
 
         #region IResetable
 
         /// <inheritdoc/>
         public virtual void OnReset()
         {
+            // Reset the timer
             this.timer = this.GetStartingTimer();
+
+            // Initialise the emetters
             this.InitEmetter(this.OnStart());
         }
 
@@ -133,7 +136,7 @@ namespace Controllers
         /// Called when this controller is initialized
         /// </summary>
         /// <returns>Emetters to initialize</returns>
-        protected virtual Emetters.BaseEmetter[] OnStart() => null;
+        protected virtual Emetters.BaseEmetter[] OnStart() => new Emetters.BaseEmetter[] { };
 
         #endregion Emetter
     }

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Serializables
 {
+    /// <summary>
+    /// Defines a pattern of <see cref="Controllers.PatternController"/>
+    /// </summary>
     [System.Serializable]
     public struct BulletPattern
     {

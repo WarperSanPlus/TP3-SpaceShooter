@@ -14,6 +14,8 @@ public class EnemySpawn : MonoBehaviour
         foreach (IResetable item in resetables)
             item.OnReset();
 
+        this.GetComponentInChildren<EnemyEnter>()?.OnReset();
+
         this.enabled = false;
     }
 }

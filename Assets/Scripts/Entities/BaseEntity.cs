@@ -43,7 +43,7 @@ namespace Entities
         /// <inheritdoc/>
         public void SetActive(bool isActive) => this.isInvicible = !isActive;
 
-        #endregion
+        #endregion IActivatable
 
         #region IResetable
 
@@ -56,13 +56,14 @@ namespace Entities
             this.hitBlinkCoroutine = null;
         }
 
-        #endregion
+        #endregion IResetable
 
         #region I-frames
 
         [SerializeField, Min(0)]
         [Tooltip("Number of seconds where the entity cannot be damaged after a hit")]
         private float invincibilityTime = 0;
+
         private int iframes = 0;
 
         #endregion I-frames
@@ -72,11 +73,18 @@ namespace Entities
         [SerializeField, Tooltip("Current health of the entity")]
         private float health;
 
+        public float Health => this.health;
+
         [SerializeField, Tooltip("Maximum health reachable by the entity")]
         protected float MaxHealth;
 
         [Tooltip("Determines if this entity can take damage")]
         public bool isInvicible = true;
+
+        // I used this notion before
+        // https://github.com/WarperSan/BTD-Adventure/blob/f6e0b1a2e7fc8d7c65ae40d72620b334e531e766/Abstract/Entity.cs#L139
+        public delegate void HealthChanged (float newHealth, float oldHealth, float maxHealth);
+        public HealthChanged onHealthChanged;
 
         private void ManageCollision(Collider2D collider)
         {
@@ -94,7 +102,7 @@ namespace Entities
             collectable?.Collect(this);
         }
 
-        public void Health(int amount) => this.AlterHealth(amount, true);
+        public void Heal(int amount) => this.AlterHealth(amount, true);
 
         public void Damage(float amount)
         {
@@ -130,6 +138,8 @@ namespace Entities
                 oldHealth,
                 this.MaxHealth
                 );
+
+            this.onHealthChanged?.Invoke(this.health, oldHealth, this.MaxHealth);
 
             // If the entity will die
             if (this.health <= 0f)
@@ -190,7 +200,8 @@ namespace Entities
         /// <param name="newHealth">New value of <see cref="health"/></param>
         /// <param name="oldHealth">Previous value of <see cref="health"/></param>
         /// <param name="maxHealth">Value of <see cref="MaxHealth"/></param>
-        protected virtual void OnHealthChanged(float newHealth, float oldHealth, float maxHealth) { }
+        protected virtual void OnHealthChanged(float newHealth, float oldHealth, float maxHealth)
+        { }
 
         /// <param name="amount">Current amount of damage</param>
         /// <returns>How much damage does the attack do?</returns>
@@ -200,7 +211,8 @@ namespace Entities
         /// Called when <see cref="FixedUpdate"/> is called
         /// </summary>
         /// <param name="elapsed">Time elapsed since the last call</param>
-        protected virtual void OnUpdate(float elapsed) { }
+        protected virtual void OnUpdate(float elapsed)
+        { }
 
         /// <returns>Should the collision be managed?</returns>
         protected virtual bool ShouldCollide(Collider2D collision) => true;

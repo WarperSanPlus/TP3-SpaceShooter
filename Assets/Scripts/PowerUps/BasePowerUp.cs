@@ -8,7 +8,7 @@ namespace PowerUps
     {
         public const string NAMESPACE = "PowerUps";
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0), Tooltip("Amount of health that this power recovers")]
         private int healAmount = 25;
 
         #region ICollectable
@@ -16,7 +16,7 @@ namespace PowerUps
         /// <inheritdoc/>
         public void Collect(BaseEntity source)
         {
-            source.Health(healAmount);
+            source.Heal(this.healAmount);
 
             this.gameObject.SetActive(false);
         }

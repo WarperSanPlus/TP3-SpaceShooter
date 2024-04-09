@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 520bf1a90aca80b4cb3cdf4d72cb52ff, type: 2}
-  overrideCompiling: 0
+  overrideCompiling: 1
 --- !u!1001 &598737814541289146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -294,7 +294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (3)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_IsActive
@@ -535,7 +535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (1)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_IsActive
@@ -743,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_Name
-      value: Hatted Blue Fairy (2)
+      value: Hatted Blue Fairy
       objectReference: {fileID: 0}
     - target: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
       propertyPath: m_IsActive
