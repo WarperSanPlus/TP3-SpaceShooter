@@ -27,12 +27,9 @@ public class MobileUI : MonoBehaviour
         else
         {
 #if !UNITY_EDITOR
-                joystick.enabled = false;
+            joystick.gameObject.SetActive(false);
+            fireButton.gameObject.SetActive(false);
 #endif
         }
-
-        playerInput.enabled = false;
-        fireButton.playerController = playerController;
-        joystick.player = player;
     }
 }
