@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Joystick
+namespace MobileUI
 {
     internal class FireButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
