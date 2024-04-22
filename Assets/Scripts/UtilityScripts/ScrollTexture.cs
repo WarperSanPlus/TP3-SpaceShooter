@@ -4,7 +4,7 @@ using UnityEngine;
 public class ScrollTexture : MonoBehaviour
 {
     [SerializeField]
-    private float scrollSpeed = 0.1f; // Vitesse de défilement de la texture
+    private float scrollSpeed = 0.1f; // Vitesse de dï¿½filement de la texture
 
     [SerializeField] private Vector2 direction;
     private Material material;
@@ -24,9 +24,9 @@ public class ScrollTexture : MonoBehaviour
 
     private void AdvanceTexture()
     {
-        // Appliquer le déplacement de texture à l'objet
-        Vector2 déplacement = this.scrollSpeed * Time.time * this.direction.normalized;
+        // Appliquer le deplacement de texture a l'objet
+        Vector2 deplacement = this.scrollSpeed * Time.time * this.direction.normalized;
 
-        this.material.SetTextureOffset("_MainTex", déplacement);
+        this.material.SetTextureOffset("_MainTex", deplacement);
     }
 }

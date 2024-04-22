@@ -33,15 +33,14 @@ namespace Singletons
             this.playerScore.SetText("Score: " + this.Score);
 
 
-            int highscore = PlayerPrefs.GetInt("Highscore", 0);
+            int highscore = PlayerPrefs.GetInt(Highscore.TAG_HIGHSCORE, 0);
             if (this.Score > highscore)
             {
                 highscore = this.Score;
-                PlayerPrefs.SetInt("Highscore", highscore);
-                PlayerPrefs.Save();
+                PlayerPrefs.SetInt(Highscore.TAG_HIGHSCORE, highscore);
             }
  
-            PlayerPrefs.SetInt("CurrentScore", this.Score);
+            PlayerPrefs.SetInt(Highscore.TAG_SCORE, this.Score);
             PlayerPrefs.Save();
         }
 

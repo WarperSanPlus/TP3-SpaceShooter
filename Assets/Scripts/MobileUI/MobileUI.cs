@@ -12,6 +12,12 @@ namespace MobileUI
         [SerializeField] Joystick joystick;
         [SerializeField] FireButton fireButton;
 
+        #if UNITY_EDITOR
+
+        [SerializeField] bool DisableIfNotMobile = true;
+
+        #endif
+
         void Start()
         {
             if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
@@ -21,17 +27,13 @@ namespace MobileUI
                 joystick.player = player;
 
             }
-            else
+            #if UNITY_EDITOR
+            else if (this.DisableIfNotMobile)
             {
-#if !UNITY_EDITOR
                     joystick.gameObject.SetActive(false);
                     fireButton.gameObject.SetActive(false);
-#endif              
             }
-
-            //playerInput.enabled = false;
-            //fireButton.playerController = playerController;
-            //joystick.player = player;
+            #endif
         }
     }
 }

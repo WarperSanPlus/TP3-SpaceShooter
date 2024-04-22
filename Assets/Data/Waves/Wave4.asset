@@ -13,14 +13,11 @@ MonoBehaviour:
   m_Name: Wave4
   m_EditorClassIdentifier: 
   enemySetting:
-  - Prefab: {fileID: 8713258125711681879, guid: 9f2d19a918d927f48b2bd19e4ac9854e, type: 3}
-    amount: 2
-    amountSpawned: 0
-  - Prefab: {fileID: 4300639988584469876, guid: 42bc29f86f8bb3848aa8275a313b74cb, type: 3}
-    amount: 2
-    amountSpawned: 0
   - Prefab: {fileID: 502225619796413641, guid: b3e605b319b651444aa901e8298be44b, type: 3}
-    amount: 1
+    amount: 2
+    amountSpawned: 0
+  - Prefab: {fileID: 8713258125711681879, guid: 9f2d19a918d927f48b2bd19e4ac9854e, type: 3}
+    amount: 5
     amountSpawned: 0
   bulletSetting: []
   links: []
